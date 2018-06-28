@@ -12,6 +12,7 @@ title: My Blog
 <p>ref</p>
 <ul>
 	{% for ref in site.posts %}
-		<li>{{ ref.date | date_to_string }} <a href="{{ site.baseurl }}{{ ref.url }}">{{ post.title }}</a></li>
+		<li> <a href="{{ site.baseurl }}{{ ref.url }}">{{ ref.title }}</a></li>
 	{% endfor %}
 </ul>
+<li> <a href="{{ site.baseurl }}">{{ return }}</a></li>
