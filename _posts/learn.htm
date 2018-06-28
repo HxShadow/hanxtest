@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html learn</title>
+<base target="_blank">
+<base style="margin-left:20px;">
+<style type="text/css">
+body {background-color:gray}
+</style>
+</head>
+<body>
+<div style="font-family:verdana;padding:20px;border-radius:10px;border:10px solid #EE872A;background-color:#ffffff">
+	<h1 style="text-align:center;">learn HTML</h1>
+</div>
+<div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
+	<b>菜单</b><br>
+	HTML<br>
+	CSS<br>
+	JavaScript
+</div>
+
+<div id="content" style="background-color:#EEEEEE;height:2400px;width:1200px;float:left;">
+<hr>
+<h2>标题h2(h1-h2)</h2>
+<a href="#C4">页内跳转</a>
+<p style="margin-left:20px;">段落演示<br>分行的效果</p>
+<b>加粗文本</b> <i>斜体文本</i> <code>电脑自动输出</code>
+这是 <sub> 下标</sub> 和 <sup> 上标</sup>
+<hr>
+<pre>此例演示如何使用 pre 标签
+对空行和   	空格  进行控制</pre>
+<hr>
+<a href="http://www.runoob.com">链接/图片/图片链接/图片大小</a>
+<a href="http://www.runoob.com" style="text-decoration:none;">无下划线</a>
+<br><img src="tumblr.jpg"  />	
+<a href="http://www.runoob.com" target="_blank"><img src="tumblr.jpg" /></a>
+<img src="tumblr.jpg" width="258" height="130" />	
+<img src="tumblr.jpg"    width="" height="130" /><br>	
+<a id="C4"><hr></a>
+<h2><span style="background-color:#B4009E;color:#ffffff;">章节 4</span></h2>
+<p>这边显示该章节的内容……</p>
+<table border="1">
+    <tr>
+        <td>Row 1, cell 1</td>
+        <td>Row 1, cell 2</td>
+    </tr>
+</table>
+<h2>章节 5</h2>
+<p>这边显示该章节的内容……</p>
+<table border="1">
+    <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+    </tr>
+    <tr>
+        <td>row 1, cell 1</td>
+        <td>row 1, cell 2</td>
+    </tr>
+    <tr>
+        <td>row 2, cell 1</td>
+        <td>row 2, cell 2</td>
+    </tr>
+</table>
+
+<h2>这个表格没有边框:</h2>
+<table>
+<tr>
+  <td>100</td>
+  <td>200</td>
+  <td>300</td>
+</tr>
+<tr>
+  <td>400</td>
+  <td>500</td>
+  <td>600</td>
+</tr>
+</table>
+
+<h2>无序列表:</h2>
+<ul>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ul>
+
+<ol>
+<li>Coffee</li>
+<li>Milk</li>
+</ol>
+
+<form>
+First name: <input type="text" name="firstname"><br>
+Last name: <input type="text" name="lastname">
+</form>
+
+<form>
+Password: <input type="password" name="pwd">
+</form>
+
+<form>
+<input type="radio" name="sex" value="male">Male<br>
+<input type="radio" name="sex" value="female">Female
+</form>
+
+<form name="input" action="html_form_action.php" method="get">
+Username: <input type="text" name="user">
+<input type="submit" value="Submit">
+</form>
+
+<br>
+<textarea style="margin-left:50px;" rows="10" cols="30">
+我是一个文本框。
+</textarea>
+
+<h1>我的第一个 JavaScript </h1>
+
+<p id="demo">
+JavaScript 可以触发事件，就像按钮点击。</p>
+
+<script>
+function myFunction()
+{
+	document.getElementById("demo").innerHTML="Hello JavaScript!";
+}
+</script>
+
+<button type="button" onclick="myFunction()">点我</button>
+
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzE9xAESye6Kde-3hT-6B90nfwUkcS8Yw&sensor=false">
+</script>
+
+<script>
+function initialize()
+{
+var mapProp = {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+
+<body>
+<div id="googleMap" style="width:500px;height:380px;"></div>
+
+</div>
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+版权 © x.han@buaa.edu.cn</div>
+</body>
+</html>
