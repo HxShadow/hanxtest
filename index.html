@@ -3,9 +3,15 @@ layout: default
 title: My Blog
 ---
 <h2>{{ page.title }}</h2>
-<p>New Papers</p>
+<p>paper</p>
 <ul>
 　　{% for post in site.posts %}
 　　　　<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+　　{% endfor %}
+</ul>
+<p>ref</p>
+<ul>
+　　{% for ref in site.posts %}
+　　　　<li>{{ ref.date | date_to_string }} <a href="{{ site.baseurl }}{{ ref.url }}">{{ post.title }}</a></li>
 　　{% endfor %}
 </ul>
