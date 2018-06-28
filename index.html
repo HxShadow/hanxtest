@@ -9,12 +9,3 @@ title: My Blog
 		<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 	{% endfor %}
 </ul>
-<p>ref</p>
-<ul>
-	{% for ref in site.posts %}
-		<li> <a href="{{ site.baseurl }}{{ ref.url }}">{{ ref.title }}</a></li>
-	{% endfor %}
-</ul>
-<ul>
-<li> <a href="{{ site.baseurl }}">{{ return }}</a></li>
-</ul>
