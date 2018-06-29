@@ -3,7 +3,6 @@ layout: default
 title: My Blog
 ---
 <head>
-  <title>Mathematica 11.2</title>
   <style type="text/css">
     body {
       font-family: Arial, sans-serif;
@@ -77,38 +76,34 @@ title: My Blog
     function genFromMathId() {
       document.getElementById("output").innerHTML = "";
       var mathId = document.getElementById("str").value;
-      var activationKey = document.getElementById("act").value;
+      var activationKey = "1234-4321-123456";
       var password = genPassword(mathId + "$1&" + activationKey);
-      document.getElementById("output").innerHTML += "Password: " + password + "</br>";
-      var a = document.createElement('a');
-      var linkText = document.createTextNode("This release was downloaded from here");
-      a.appendChild(linkText);
-      a.title = "This release was downloaded from here";
-      a.href = "https://avxhm.se/blogs/Artist14";
-      document.body.appendChild(a);
+      document.getElementById("output").innerHTML += password + "</br>";
     }
   </script>
 </head>
 
 <body>
-  <h2>Mathematica 11.2</h2>
-  <p>  <br/><br/>Input given MathID (xxxx-xxxxx-xxxxx), whatever Activation Key (xxxx-xxxx-xxxxxx) and press Generate.</p>
-  <input type="text" id="str"/>
-  <input type="text" id="act"/>
-  <button onclick="genFromMathId()">Generate</button>
-  <br/>
-  <br/>
-  <div id="output"></div>
 <h2>{{ page.title }}</h2>
 
-<p>paper</p>
+
+<p>News</p>
 <ul>
 	{% for post in site.posts %}
 		<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 	{% endfor %}
 </ul>
 
-<p><a href="html/mathematica.htm">Mathematica</a></p>
-<p><a href="html/learn.htm">Learn HTML</a></p>
+<ul>
+<li><a href="html/learn.htm">Learn HTML</a></li>
+  <br/>
+<li>
+  <input type="text" id="str"/>
+  <button onclick="genFromMathId()" style="color:#ffffff"> MathID </button>
+  <br/>
+  <br/>
+  <div id="output"></div>
+  </li>
 
+</ul>
 </body>
