@@ -12,6 +12,8 @@ scp -P 2000 hanx@hep.buaa.edu.cn:.ssh/id_rsa.pub $HOME;cat $HOME/id_rsa.pub >> $
 mkdir $HOME/yum.bk;sudo mv /etc/yum.repos.d/* $HOME/yum.bk/
 scp -P 2000 hanx@hep.buaa.edu.cn:share/install/repo.tar $HOME
 tar -xvf repo.tar;cd repo;sudo mv * /etc/yum.repos.d/
+cd /etc/pki/rpm-gpg
+sudo wget https://archive.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
 sudo yum upgrade
 sudo yum update 
 
@@ -23,6 +25,9 @@ sudo yum -y install epel-release
 sudo yum -y install ntfs-3g
 grub2-mkconfig -o /boot/grub2/grub.cfg
 # add 'sudo ntfs-3g /dev/sdb3 /data' in to /etc/rc.d/rc.local
+# windows 
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg  
+init 6
 # if the Windows disk was readonly, then
 # sudo yum -y install ntfs*
 # ntfsfix /dev/sdb1
@@ -135,12 +140,12 @@ sudo yum install vlc
 
 #vim
 #yum remove libstdc++.i686
-yum install ncurses-devel.x86_64 
-yum install libstdc++-static.x86_64 
-yum install libstdc++-docs.x86_64 
-curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcepl-vim8-epel-7.repo -o /etc/yum.repos.d/mcepl-vim8-epel-7.repo
-yum update 
-yum install vim-X11.x86_64 vim-enhanced.x86_64 
+sudo yum install ncurses-devel.x86_64  -y
+sudo yum install libstdc++-static.x86_64 -y
+sudo yum install libstdc++-docs.x86_64 -y
+sudo curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcepl-vim8-epel-7.repo -o /etc/yum.repos.d/mcepl-vim8-epel-7.repo
+sudo yum update 
+sudo yum install vim-X11.x86_64 vim-enhanced.x86_64 
 
 #workspace
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1']"
