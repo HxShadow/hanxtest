@@ -1,11 +1,8 @@
-ls
+# login with root
 passwd
 yum install -y python-setuptools && easy_install pip
 pip install shadowsocks
 vi /etc/shadowsocks.json
-ssserver -c /etc/shadowsocks.json -d start
-vi /var/log/shadowsocks.log
-ssserver -c /etc/shadowsocks.json -d stop
 yum install firewalld
 systemctl start firewalld
 vi /usr/lib/firewalld/services/ss.xml
@@ -13,17 +10,8 @@ firewall-cmd --permanent --add-service=ss
 firewall-cmd --reload
 wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
 chmod +x bbr.sh
-rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
-yum --enablerepo=elrepo-kernel install kernel-ml -y
-cat /boot/grub2/grub.cfg |grep menuentry
-grub2-set-default 'CentOS Linux (4.18.1-1.el7.elrepo.x86_64) 7 (Core)'
-reboot
-vi /etc/shadowsocks.json
+./bbr.sh 
 uname -r
-ls
-chmod +x bbr.sh
-./bbr.sh
 sysctl net.ipv4.tcp_available_congestion_control
 sysctl net.ipv4.tcp_congestion_control
 sysctl net.core.default_qdisc
@@ -31,22 +19,25 @@ lsmod | grep bbr
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
-sysctl net.ipv4.tcp_available_congestion_control
 ssserver -c /etc/shadowsocks.json -d start
-vi install_bbr.log
-rm b* install_bbr.log serverspeeder*
-ls
-vi /etc/shadowsocks.json
 useradd hanx
 passwd hanx
-groups
 visudo
 vi /etc/ssh/ssh_config
 vi /etc/ssh/sshd_config
 yum install net-tools -y
-netstat -tunlp
-netstat -tunlp|grep 22
-netstat -tunlp|grep 6871
 service sshd restart
 iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 6871 -j ACCEPT
 iptables-save
+# change to hanx
+
+sudo wget "https://github.com/rg3/youtube-dl/releases/download/2018.08.28/youtube-dl" -O /usr/local/bin/youtube-dl
+sudo chmod a+rx /usr/local/bin/youtube-dl
+sudo rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.n
+sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+sudo yum install ffmpeg ffmpeg-devel -y
+youtube-dl https://www.youtube.com/watch?v=rftS24FblY4 -f 137+140
+youtube-dl https://www.youtube.com/watch?v=rftS24FblY4 -F
+free
+sudo yum install xauth
