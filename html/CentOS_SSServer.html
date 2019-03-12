@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)https://renwole.com/archives/746 -->
+<html lang="zh-CN" prefix="og: http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>CentOS 7系统配置 SSServer 实现科学上网 - 任我乐</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- This site is optimized with the Yoast SEO plugin v9.2.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://renwole.com/archives/746">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7系统配置 SSServer 实现科学上网 - 任我乐">
+<meta property="og:description" content="说明：本文相关配置和说明仅用于示例和操作指引，任我乐简称本站，不对相关操作结果及由此产生的问题负责。 shadowsocks有几个服务器端版本，分别是Python、Go、C with、libev和C++ with Qt。其中Python是s…">
+<meta property="og:url" content="https://renwole.com/archives/746">
+<meta property="og:site_name" content="任我乐">
+<meta property="article:tag" content="clowwindy">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="shadowsocks">
+<meta property="article:tag" content="ss">
+<meta property="article:tag" content="SSServer">
+<meta property="article:tag" content="科学上网">
+<meta property="article:section" content="OS">
+<meta property="article:published_time" content="2017-10-26T23:30:51+00:00">
+<meta property="article:modified_time" content="2017-11-01T07:47:10+00:00">
+<meta property="og:updated_time" content="2017-11-01T07:47:10+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="说明：本文相关配置和说明仅用于示例和操作指引，任我乐简称本站，不对相关操作结果及由此产生的问题负责。 shadowsocks有几个服务器端版本，分别是Python、Go、C with、libev和C++ with Qt。其中Python是s…阅读全文CentOS 7系统配置 SSServer 实现科学上网">
+<meta name="twitter:title" content="CentOS 7系统配置 SSServer 实现科学上网 - 任我乐">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="任我乐 » Feed" href="https://renwole.com/feed">
+<link rel="alternate" type="application/rss+xml" title="任我乐 » 评论Feed" href="https://renwole.com/comments/feed">
+<link rel="alternate" type="application/rss+xml" title="任我乐 » CentOS 7系统配置 SSServer 实现科学上网评论Feed" href="https://renwole.com/archives/746/feed">
+		<script src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/push.js"></script><script src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/hm.js"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/renwole.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.3"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/wp-emoji-release.min.js" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="wp-block-library-css" href="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/style.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="ct-cele-google-fonts-css" href="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="font-awesome-css" href="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/font-awesome.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="ct-cele-style-css" href="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/style.css" type="text/css" media="all">
+<script type="text/javascript" src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/jquery.js"></script>
+<script type="text/javascript" src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/jquery-migrate.min.js"></script>
+<link rel="https://api.w.org/" href="https://renwole.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://renwole.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://renwole.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.0.3">
+<link rel="shortlink" href="https://renwole.com/?p=746">
+<link rel="alternate" type="application/json+oembed" href="https://renwole.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Frenwole.com%2Farchives%2F746">
+<link rel="alternate" type="text/xml+oembed" href="https://renwole.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Frenwole.com%2Farchives%2F746&amp;format=xml">
+<script type="text/javascript">
+	window._se_plugin_version = '8.1.9';
+</script>
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<link rel="icon" href="https://renwole.com/wp-content/uploads/2017/04/cropped-Renwole-logo-192x192-32x32.png" sizes="32x32">
+<link rel="icon" href="https://renwole.com/wp-content/uploads/2017/04/cropped-Renwole-logo-192x192-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="https://renwole.com/wp-content/uploads/2017/04/cropped-Renwole-logo-192x192-180x180.png">
+<meta name="msapplication-TileImage" content="https://renwole.com/wp-content/uploads/2017/04/cropped-Renwole-logo-192x192-270x270.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8a6d8be911591c9c4dffe5cf99f245b6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+
+<body id="cele" class="post-template-default single single-post postid-746 single-format-standard">
+<a class="skip-content" href="https://renwole.com/archives/746#main">Press "Enter" to skip to content</a>
+<div id="overflow-container" class="overflow-container">
+	<div id="max-width" class="max-width">
+		<div id="main-sidebar" class="main-sidebar" style="">
+			<div id="sidebar-inner" class="sidebar-inner">
+								<header class="site-header" id="site-header" role="banner">
+					<div id="title-container" class="title-container">
+						<div id="site-title" class="site-title"><a href="https://renwole.com/">任我乐</a></div>						<p class="tagline">高质量的技术博客</p>					</div>
+					<button id="toggle-navigation" class="toggle-navigation" name="toggle-navigation" aria-expanded="false">
+						<span class="screen-reader-text">open menu</span>
+						<svg width="24px" height="18px" viewBox="0 0 24 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+				        <g transform="translate(-148.000000, -36.000000)" fill="#6B6B6B">
+				            <g transform="translate(123.000000, 25.000000)">
+				                <g transform="translate(25.000000, 11.000000)">
+				                    <rect x="0" y="16" width="24" height="2"></rect>
+				                    <rect x="0" y="8" width="24" height="2"></rect>
+				                    <rect x="0" y="0" width="24" height="2"></rect>
+				                </g>
+				            </g>
+				        </g>
+				    </g>
+				</svg>					</button>
+					<div id="menu-primary-container" class="menu-primary-container">
+						<div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    <div class="menu-unset"></div></div>
+											</div>
+				</header>
+								    <div id="sidebar-primary-container" class="sidebar-primary-container">
+        <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+            <h1 class="screen-reader-text">Sidebar</h1>
+            <section id="search-2" class="widget widget_search"><div class="search-form-container">
+    <form role="search" method="get" class="search-form" action="https://renwole.com/">
+        <label class="screen-reader-text" for="search-field">Search</label>
+        <input id="search-field" type="search" class="search-field" value="" name="s" title="Search for:" placeholder="Search for...">
+        <input type="submit" class="search-submit" value="Go">
+    </form>
+</div></section><section id="calendar-3" class="widget widget_calendar"><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar">
+	<caption>2019年三月</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="星期一">一</th>
+		<th scope="col" title="星期二">二</th>
+		<th scope="col" title="星期三">三</th>
+		<th scope="col" title="星期四">四</th>
+		<th scope="col" title="星期五">五</th>
+		<th scope="col" title="星期六">六</th>
+		<th scope="col" title="星期日">日</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="https://renwole.com/archives/date/2018/05">« 5月</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next" class="pad">&nbsp;</td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="4" class="pad">&nbsp;</td><td>1</td><td id="today">2</td><td>3</td>
+	</tr>
+	<tr>
+		<td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
+	</tr>
+	<tr>
+		<td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td>
+	</tr>
+	<tr>
+		<td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td>
+	</tr>
+	<tr>
+		<td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td>
+	</tr>
+	</tbody>
+	</table></div></section><section id="media_image-3" class="widget widget_media_image"><a href="https://renwole.com/archives/1151"><img width="285" height="256" src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/Centos-7-Download.png" class="image wp-image-1161  attachment-full size-full" alt="" style="max-width: 100%; height: auto;"></a></section>		<section id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">近期文章</h2>		<ul>
+											<li>
+					<a href="https://renwole.com/archives/1204">Shell脚本变量判断参数命令学习篇</a>
+									</li>
+											<li>
+					<a href="https://renwole.com/archives/1199">Centos 7利用内存优化磁盘缓存读写速度</a>
+									</li>
+											<li>
+					<a href="https://renwole.com/archives/1177">Let’s Encrypt SSL证书续期失败 ascii编解码器不能编码</a>
+									</li>
+											<li>
+					<a href="https://renwole.com/archives/1020">运行环境正常 织梦DedeCMS验证码无法显示</a>
+									</li>
+											<li>
+					<a href="https://renwole.com/archives/1147">Centos 7如何备份和还原Redis数据</a>
+									</li>
+					</ul>
+		</section><section id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">近期评论</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">Node Cloud</span>发表在《<a href="https://renwole.com/archives/39#comment-2707">Centos 7 源码编译安装 Nginx 1.13</a>》</li><li class="recentcomments"><span class="comment-author-link">Node Cloud</span>发表在《<a href="https://renwole.com/archives/1151#comment-2706">CentOS 7.6.1810 x86 64  ISO 最新原版镜像下载</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://vim.ink/" rel="external nofollow" class="url">vimtutor</a></span>发表在《<a href="https://renwole.com/archives/1204#comment-2694">Shell脚本变量判断参数命令学习篇</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://vim.ink/" rel="external nofollow" class="url">ayawaw</a></span>发表在《<a href="https://renwole.com/archives/1151#comment-2647">CentOS 7.6.1810 x86 64  ISO 最新原版镜像下载</a>》</li><li class="recentcomments"><span class="comment-author-link">Ivan Zhangyang</span>发表在《<a href="https://renwole.com/archives/700#comment-2593">Windows Server 2012/2016 R2 （含Win10） 激活工具</a>》</li><li class="recentcomments"><span class="comment-author-link">Node Cloud</span>发表在《<a href="https://renwole.com/archives/700#comment-2529">Windows Server 2012/2016 R2 （含Win10） 激活工具</a>》</li></ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul>
+			<li><a href="https://renwole.com/archives/date/2018/05">2018年五月</a>&nbsp;(1)</li>
+	<li><a href="https://renwole.com/archives/date/2018/04">2018年四月</a>&nbsp;(8)</li>
+	<li><a href="https://renwole.com/archives/date/2018/03">2018年三月</a>&nbsp;(8)</li>
+	<li><a href="https://renwole.com/archives/date/2018/02">2018年二月</a>&nbsp;(5)</li>
+	<li><a href="https://renwole.com/archives/date/2018/01">2018年一月</a>&nbsp;(9)</li>
+	<li><a href="https://renwole.com/archives/date/2017/12">2017年十二月</a>&nbsp;(9)</li>
+	<li><a href="https://renwole.com/archives/date/2017/11">2017年十一月</a>&nbsp;(9)</li>
+	<li><a href="https://renwole.com/archives/date/2017/10">2017年十月</a>&nbsp;(9)</li>
+	<li><a href="https://renwole.com/archives/date/2017/09">2017年九月</a>&nbsp;(6)</li>
+	<li><a href="https://renwole.com/archives/date/2017/08">2017年八月</a>&nbsp;(9)</li>
+	<li><a href="https://renwole.com/archives/date/2017/07">2017年七月</a>&nbsp;(13)</li>
+	<li><a href="https://renwole.com/archives/date/2017/06">2017年六月</a>&nbsp;(7)</li>
+	<li><a href="https://renwole.com/archives/date/2017/05">2017年五月</a>&nbsp;(31)</li>
+	<li><a href="https://renwole.com/archives/date/2017/04">2017年四月</a>&nbsp;(2)</li>
+		</ul>
+		</section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">分类目录</h2>		<ul>
+	<li class="cat-item cat-item-1"><a href="https://renwole.com/category/apache">Apache</a>
+</li>
+	<li class="cat-item cat-item-605"><a href="https://renwole.com/category/elk">ElasticStack</a>
+</li>
+	<li class="cat-item cat-item-786"><a href="https://renwole.com/category/git">Git</a>
+</li>
+	<li class="cat-item cat-item-872"><a href="https://renwole.com/category/keepalived">Keepalived</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://renwole.com/category/linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://renwole.com/category/mariadb">MariaDB</a>
+</li>
+	<li class="cat-item cat-item-657"><a href="https://renwole.com/category/mongodb">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://renwole.com/category/mysql">MySQL</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://renwole.com/category/nginx">Nginx</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://renwole.com/category/os">OS</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="https://renwole.com/category/php">PHP</a>
+</li>
+	<li class="cat-item cat-item-362"><a href="https://renwole.com/category/redis">Redis</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://renwole.com/category/sql-server">SQL server</a>
+</li>
+	<li class="cat-item cat-item-427"><a href="https://renwole.com/category/storage">Storage</a>
+</li>
+	<li class="cat-item cat-item-439"><a href="https://renwole.com/category/tomcat">Tomcat</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://renwole.com/category/windows">Windows</a>
+</li>
+	<li class="cat-item cat-item-554"><a href="https://renwole.com/category/zabbix">Zabbix</a>
+</li>
+		</ul>
+</section><section id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widget-title">热门标签</h2><div class="tagcloud"><a href="https://renwole.com/tags/apache" class="tag-cloud-link tag-link-453 tag-link-position-1" style="font-size: 11.422222222222pt;" aria-label="Apache (4个项目)">Apache</a>
+<a href="https://renwole.com/tags/cdn" class="tag-cloud-link tag-link-259 tag-link-position-2" style="font-size: 8pt;" aria-label="CDN (2个项目)">CDN</a>
+<a href="https://renwole.com/tags/centos" class="tag-cloud-link tag-link-32 tag-link-position-3" style="font-size: 22pt;" aria-label="Centos (23个项目)">Centos</a>
+<a href="https://renwole.com/tags/centos7" class="tag-cloud-link tag-link-13 tag-link-position-4" style="font-size: 16.088888888889pt;" aria-label="Centos 7 (9个项目)">Centos 7</a>
+<a href="https://renwole.com/tags/dr" class="tag-cloud-link tag-link-881 tag-link-position-5" style="font-size: 9.8666666666667pt;" aria-label="DR (3个项目)">DR</a>
+<a href="https://renwole.com/tags/elasticsearch" class="tag-cloud-link tag-link-596 tag-link-position-6" style="font-size: 12.666666666667pt;" aria-label="Elasticsearch (5个项目)">Elasticsearch</a>
+<a href="https://renwole.com/tags/es" class="tag-cloud-link tag-link-595 tag-link-position-7" style="font-size: 11.422222222222pt;" aria-label="ES (4个项目)">ES</a>
+<a href="https://renwole.com/tags/git" class="tag-cloud-link tag-link-764 tag-link-position-8" style="font-size: 9.8666666666667pt;" aria-label="git (3个项目)">git</a>
+<a href="https://renwole.com/tags/java" class="tag-cloud-link tag-link-429 tag-link-position-9" style="font-size: 12.666666666667pt;" aria-label="JAVA (5个项目)">JAVA</a>
+<a href="https://renwole.com/tags/jre" class="tag-cloud-link tag-link-436 tag-link-position-10" style="font-size: 11.422222222222pt;" aria-label="jre (4个项目)">jre</a>
+<a href="https://renwole.com/tags/keepalived" class="tag-cloud-link tag-link-873 tag-link-position-11" style="font-size: 16.088888888889pt;" aria-label="Keepalived (9个项目)">Keepalived</a>
+<a href="https://renwole.com/tags/kibana" class="tag-cloud-link tag-link-601 tag-link-position-12" style="font-size: 12.666666666667pt;" aria-label="Kibana (5个项目)">Kibana</a>
+<a href="https://renwole.com/tags/kvm" class="tag-cloud-link tag-link-268 tag-link-position-13" style="font-size: 8pt;" aria-label="KVM (2个项目)">KVM</a>
+<a href="https://renwole.com/tags/linux" class="tag-cloud-link tag-link-97 tag-link-position-14" style="font-size: 21.688888888889pt;" aria-label="linux (22个项目)">linux</a>
+<a href="https://renwole.com/tags/lvs" class="tag-cloud-link tag-link-880 tag-link-position-15" style="font-size: 13.755555555556pt;" aria-label="LVS (6个项目)">LVS</a>
+<a href="https://renwole.com/tags/mariadb" class="tag-cloud-link tag-link-21 tag-link-position-16" style="font-size: 15.311111111111pt;" aria-label="MariaDB (8个项目)">MariaDB</a>
+<a href="https://renwole.com/tags/master" class="tag-cloud-link tag-link-225 tag-link-position-17" style="font-size: 9.8666666666667pt;" aria-label="master (3个项目)">master</a>
+<a href="https://renwole.com/tags/mssql" class="tag-cloud-link tag-link-237 tag-link-position-18" style="font-size: 9.8666666666667pt;" aria-label="MSSQL (3个项目)">MSSQL</a>
+<a href="https://renwole.com/tags/mysql" class="tag-cloud-link tag-link-12 tag-link-position-19" style="font-size: 17.333333333333pt;" aria-label="MySQL (11个项目)">MySQL</a>
+<a href="https://renwole.com/tags/nginx" class="tag-cloud-link tag-link-114 tag-link-position-20" style="font-size: 17.8pt;" aria-label="nginx (12个项目)">nginx</a>
+<a href="https://renwole.com/tags/nosql" class="tag-cloud-link tag-link-487 tag-link-position-21" style="font-size: 9.8666666666667pt;" aria-label="NoSQL (3个项目)">NoSQL</a>
+<a href="https://renwole.com/tags/php" class="tag-cloud-link tag-link-31 tag-link-position-22" style="font-size: 11.422222222222pt;" aria-label="php (4个项目)">php</a>
+<a href="https://renwole.com/tags/redis" class="tag-cloud-link tag-link-351 tag-link-position-23" style="font-size: 12.666666666667pt;" aria-label="Redis (5个项目)">Redis</a>
+<a href="https://renwole.com/tags/server" class="tag-cloud-link tag-link-449 tag-link-position-24" style="font-size: 9.8666666666667pt;" aria-label="server (3个项目)">server</a>
+<a href="https://renwole.com/tags/session" class="tag-cloud-link tag-link-370 tag-link-position-25" style="font-size: 9.8666666666667pt;" aria-label="session (3个项目)">session</a>
+<a href="https://renwole.com/tags/ssh" class="tag-cloud-link tag-link-95 tag-link-position-26" style="font-size: 12.666666666667pt;" aria-label="SSH (5个项目)">SSH</a>
+<a href="https://renwole.com/tags/tomcat" class="tag-cloud-link tag-link-441 tag-link-position-27" style="font-size: 9.8666666666667pt;" aria-label="Tomcat (3个项目)">Tomcat</a>
+<a href="https://renwole.com/tags/web%e6%9c%8d%e5%8a%a1%e5%99%a8" class="tag-cloud-link tag-link-37 tag-link-position-28" style="font-size: 9.8666666666667pt;" aria-label="web服务器 (3个项目)">web服务器</a>
+<a href="https://renwole.com/tags/x-pack" class="tag-cloud-link tag-link-603 tag-link-position-29" style="font-size: 9.8666666666667pt;" aria-label="X-Pack (3个项目)">X-Pack</a>
+<a href="https://renwole.com/tags/xen" class="tag-cloud-link tag-link-269 tag-link-position-30" style="font-size: 8pt;" aria-label="Xen (2个项目)">Xen</a>
+<a href="https://renwole.com/tags/zabbix" class="tag-cloud-link tag-link-332 tag-link-position-31" style="font-size: 11.422222222222pt;" aria-label="zabbix (4个项目)">zabbix</a>
+<a href="https://renwole.com/tags/zabbix%e7%9b%91%e6%8e%a7" class="tag-cloud-link tag-link-326 tag-link-position-32" style="font-size: 11.422222222222pt;" aria-label="zabbix监控 (4个项目)">zabbix监控</a>
+<a href="https://renwole.com/tags/%e4%b8%bb%e5%a4%87%e6%a8%a1%e5%bc%8f" class="tag-cloud-link tag-link-877 tag-link-position-33" style="font-size: 9.8666666666667pt;" aria-label="主备模式 (3个项目)">主备模式</a>
+<a href="https://renwole.com/tags/%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-313 tag-link-position-34" style="font-size: 9.8666666666667pt;" aria-label="代理 (3个项目)">代理</a>
+<a href="https://renwole.com/tags/%e5%88%86%e5%b8%83%e5%bc%8f" class="tag-cloud-link tag-link-515 tag-link-position-35" style="font-size: 9.8666666666667pt;" aria-label="分布式 (3个项目)">分布式</a>
+<a href="https://renwole.com/tags/%e5%8f%8c%e4%b8%bb%e6%a8%a1%e5%bc%8f" class="tag-cloud-link tag-link-878 tag-link-position-36" style="font-size: 9.8666666666667pt;" aria-label="双主模式 (3个项目)">双主模式</a>
+<a href="https://renwole.com/tags/%e5%8f%8c%e7%bd%91%e5%8d%a1" class="tag-cloud-link tag-link-885 tag-link-position-37" style="font-size: 12.666666666667pt;" aria-label="双网卡 (5个项目)">双网卡</a>
+<a href="https://renwole.com/tags/%e5%a4%a7%e8%ae%a1%e7%ae%97" class="tag-cloud-link tag-link-253 tag-link-position-38" style="font-size: 11.422222222222pt;" aria-label="大计算 (4个项目)">大计算</a>
+<a href="https://renwole.com/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" class="tag-cloud-link tag-link-220 tag-link-position-39" style="font-size: 16.088888888889pt;" aria-label="数据库 (9个项目)">数据库</a>
+<a href="https://renwole.com/tags/%e6%97%b6%e9%97%b4%e5%90%8c%e6%ad%a5" class="tag-cloud-link tag-link-537 tag-link-position-40" style="font-size: 8pt;" aria-label="时间同步 (2个项目)">时间同步</a>
+<a href="https://renwole.com/tags/%e6%9c%8d%e5%8a%a1%e5%99%a8" class="tag-cloud-link tag-link-194 tag-link-position-41" style="font-size: 11.422222222222pt;" aria-label="服务器 (4个项目)">服务器</a>
+<a href="https://renwole.com/tags/%e7%bc%93%e5%ad%98%e6%95%b0%e6%8d%ae%e5%ba%93" class="tag-cloud-link tag-link-359 tag-link-position-42" style="font-size: 12.666666666667pt;" aria-label="缓存数据库 (5个项目)">缓存数据库</a>
+<a href="https://renwole.com/tags/%e8%b4%9f%e8%bd%bd%e5%9d%87%e8%a1%a1" class="tag-cloud-link tag-link-311 tag-link-position-43" style="font-size: 17.333333333333pt;" aria-label="负载均衡 (11个项目)">负载均衡</a>
+<a href="https://renwole.com/tags/%e9%9b%86%e7%be%a4" class="tag-cloud-link tag-link-379 tag-link-position-44" style="font-size: 9.8666666666667pt;" aria-label="集群 (3个项目)">集群</a>
+<a href="https://renwole.com/tags/%e9%ab%98%e5%8f%af%e7%94%a8" class="tag-cloud-link tag-link-221 tag-link-position-45" style="font-size: 17.8pt;" aria-label="高可用 (12个项目)">高可用</a></div>
+</section><section id="custom_html-3" class="widget_text widget widget_custom_html"><h2 class="widget-title">我的朋友</h2><div class="textwidget custom-html-widget"><a href="https://wzfou.com/" target="_blank" rel="noopener">挖站否</a>、<a href="http://www.vpao.net/" target="_blank" rel="noopener">V泡网</a>、<a href="https://www.xiaoz.me/" target="_blank" rel="noopener">小z博客</a>、<a href="http://www.typ520.cn/" target="_blank" rel="noopener">小银运维站</a>、<a href="http://www.z-dig.com/" target="_blank" rel="noopener">All Possible</a>、<a href="http://www.nginx.cn/" target="_blank" title="nginx中文站">nginx</a>、<a href="http://www.ac166.cn/" target="_blank" rel="noopener">阿城's Blog</a>、<a href="https://www.xiaoxiaowu.me/" target="_blank" rel="noopener">Mr.Wu</a>、<a href="http://www.songyawei.cn/" target="_blank" rel="noopener">Linux运维工程师</a>、<a href="https://www.tracymc.cn/" target="_blank" rel="noopener">Tracymc的技术博客</a></div></section>        </aside>
+    </div>
+			</div>
+		</div>
+		<section id="main" class="main" role="main" style="min-height: 3436px;">
+			
+    <div id="loop-container" class="loop-container">
+        <div class="post-746 post type-post status-publish format-standard hentry category-os tag-clowwindy tag-python tag-shadowsocks tag-ss tag-ssserver tag-691 entry">
+		<article>
+		<div class="post-header">
+			<h1 class="post-title">CentOS 7系统配置 SSServer 实现科学上网</h1>
+			<div class="post-byline"><span>Published <a class="date" href="https://renwole.com/archives/date/2017/10">2017年10月27日</a> by <a class="author" href="https://renwole.com/archives/author/tianshurenwole-com">Node Cloud</a></span></div>		</div>
+				<div class="post-content">
+			<p><span style="color: #ff0000;">说明：</span>本文相关配置和说明仅用于示例和操作指引，任我乐简称本站，不对相关操作结果及由此产生的问题负责。</p>
+<p><code>shadowsocks</code>有几个服务器端版本，分别是Python、Go、C with、libev和C++ with Qt。其中Python是<code>shadowsocks</code>的作者<code>clowwindy</code>制作，安装和使用最为简单，而且支持多端口。</p>
+<p><strong>1.安装Shadowsocks:</strong></p>
+<pre>$ yum install python-setuptools
+$ easy_install pip
+$ pip install shadowsocks</pre>
+<p><strong>2.验证Shadowsocks是否正确安装</strong></p>
+<pre>$ ssserver -help</pre>
+<p>显示以下内容说明安装成功：</p>
+<pre>option -e not recognized
+usage: ssserver [OPTION]...
+A fast tunnel proxy that helps you bypass firewalls.
+
+You can supply configurations via either config file or command line arguments.
+
+Proxy options:
+  -c CONFIG              path to config file
+  -s SERVER_ADDR         server address, default: 0.0.0.0
+  -p SERVER_PORT         server port, default: 8388
+  -k PASSWORD            password
+  -m METHOD              encryption method, default: aes-256-cfb
+  -t TIMEOUT             timeout in seconds, default: 300
+  --fast-open            use TCP_FASTOPEN, requires Linux 3.7+
+  --workers WORKERS      number of workers, available on Unix/Linux
+  --forbidden-ip IPLIST  comma seperated IP list forbidden to connect
+  --manager-address ADDR optional server manager UDP address, see wiki
+
+General options:
+  -h, --help             show this help message and exit
+  -d start/stop/restart  daemon mode
+  --pid-file PID_FILE    pid file for daemon mode
+  --log-file LOG_FILE    log file for daemon mode
+  --user USER            username to run as
+  -v, -vv                verbose mode
+  -q, -qq                quiet mode, only show warnings/errors
+  --version              show version information
+
+Online help: &lt;https://github.com/shadowsocks/shadowsocks&gt;</pre>
+<p><strong>3.创建Shadowsocks配置文件</strong></p>
+<p>配置文件有两种用户模式，分别是：单用户、多用户。已列出，供参考。</p>
+<pre>$ vim /etc/shadowsocks.json</pre>
+<p>单用户配置插入以下用户：</p>
+<pre>{
+    "server":"my-server",
+    "server_port":9999,
+    "local_port":8888,
+    "password":"P@ssyun",
+    "timeout":600,
+    "method":"aes-256-cfb",
+    "auth": true
+}</pre>
+<p>多用户配置插入以下内容：</p>
+<pre>{
+    "server":"0.0.0.0",
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "port_password":{
+         "9999":"password0",
+         "9001":"password1",
+         "9002":"password2",
+         "9003":"password3",
+         "9004":"password4"
+    },
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}</pre>
+<p>字段说明：</p>
+<p><code>server：</code>您的主机名或服务器IP<code>（IPv4/IPv6）</code>。<br>
+<code>server_port：</code>服务器端口号。<br>
+<code>local_port：</code>本地端口号。<br>
+<code>password：</code>用于加密传输的密码。<br>
+<code>timeout：</code>连接超时（以秒为单位）。<br>
+<code>method：</code>加密方法，<code>“bf-cfb”，“aes-256-cfb”，“des-cfb”，“rc4”</code>等。默认为表，不安全。建议使用<code>“aes-256-cfb”</code>。<br>
+<code>auth：</code>一次性认证，设置为true以启用一次性认证功能。<br>
+<code>fast_open：true</code> 或 false。如果你的服务器 Linux 内核在3.7+，可以开启 fast_open 以降低延迟。</p>
+<p><strong>4.优化Shadowsocks</strong></p>
+<p>增加打开文件描述符的最大数量</p>
+<pre>$ vim /etc/security/limits.conf</pre>
+<p>添加如下两行（全局）：</p>
+<pre>* soft nofile 51200
+* hard nofile 51200</pre>
+<p>设置ulimit：</p>
+<pre>$ ulimit -n 51200</pre>
+<p><strong>5.调整Linux内核参数</strong></p>
+<p>修改sysctl配置文件:</p>
+<pre>$ vim /etc/sysctl.conf</pre>
+<p>插入或修改如下内容：</p>
+<pre>fs.file-max = 51200
+
+net.core.rmem_max = 67108864
+net.core.wmem_max = 67108864
+net.core.netdev_max_backlog = 250000
+net.core.somaxconn = 4096
+
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_tw_recycle = 0
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+net.ipv4.ip_local_port_range = 10000 65000
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_max_tw_buckets = 5000
+net.ipv4.tcp_fastopen = 3
+net.ipv4.tcp_mem = 25600 51200 102400
+net.ipv4.tcp_rmem = 4096 87380 67108864
+net.ipv4.tcp_wmem = 4096 65536 67108864
+net.ipv4.tcp_mtu_probing = 1
+net.ipv4.tcp_congestion_control = hybla</pre>
+<p>使sysctl修改生效：</p>
+<pre>$ sysctl -p</pre>
+<p><strong>6.启动Shadowsocks服务</strong></p>
+<p>二种方式启动，分别是：</p>
+<p>6.1.从后台启动:</p>
+<pre>$ ssserver -c /etc/shadowsocks.json -d start</pre>
+<p>6.2.从脚本启动（推荐）</p>
+<p>创建system系统单元格启动文件:</p>
+<pre>$ vim /usr/lib/systemd/system/ss.service</pre>
+<pre>[Unit]
+Description=Shadowsocks Server
+After=network.target
+
+[Service]
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /run/shadowsocks
+ExecStartPre=/bin/chown nobody:nobody /run/shadowsocks
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
+Restart=on-abort
+User=nobody
+Group=nobody
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target</pre>
+<p>参数说明：</p>
+<p><code>systemd</code>的所有可用的单元文件存放在 <code>/usr/lib/systemd/system/</code> 和 <code>/etc/systemd/system/</code> 目录，后者优先级更高。</p>
+<p>ExecStartPre 指服务启动前执行的脚本，这里当然不能用nobody执行。所以设置 <code>PermissionsStartOnly</code>，指的是只有ExecStart中的脚本用设置中的权限执行。</p>
+<p><code>ExecStart</code> 中 <code>ssserver</code> 如果加了-d 参数，用nobody执行就会有权限问题。</p>
+<p><code>UMask 0027</code> 和 <code>umask 027</code> 一样，最后一位7代表对 Others 的 <code>File permissio</code>n 为 0</p>
+<p>这里没有用 <code>Type=forking</code> 参数，因为本身没加 -d 参数，<code>ssserver</code> 不会fork自己作为守护进程。默认 Simple，即把守护进程化、重启、结束等工作交给systemd处理。</p>
+<p><code>WantedBy=multi-user.target</code> 对应原来的 <code>runlevel 3</code>。</p>
+<p>运行服务并设置开机自启：</p>
+<pre>$ systemctl start ss
+$ systemctl enable ss</pre>
+<p><strong>7.设置 Firewall 防火墙</strong></p>
+<p>开启Shadowsocks支持TCP/UDP协议服务端口：</p>
+<pre>$ firewall-cmd --zone=public --add-port=8388/tcp --permanent
+$ firewall-cmd --zone=public --add-port=8388/udp --permanent
+$ firewall-cmd --reload</pre>
+<p><strong>8.客户端配置</strong></p>
+<p>下载Windows客户端shadowsocks，填入IP、端口、密码等信息，点“Save”即可（需要NET 4.6.2支持才能运行客户端）。</p>
+<p>目前来说已经完成安装与配置。</p>
+<p>参考：</p>
+<blockquote><p>https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E</p></blockquote>
+			<strong>版权声明：</strong>本站原创文章，欢迎任何形式的转载。
+			<br><strong>转载请注明：</strong><a href="https://renwole.com/archives/746">CentOS 7系统配置 SSServer 实现科学上网 | 任我乐</a><br>
+								</div>
+		<div class="post-meta">
+			<p class="post-categories"><span>Read more posts about</span> <a href="https://renwole.com/category/os" title="View all posts in OS">OS</a></p>			<div class="post-tags"><ul><li><a href="https://renwole.com/tags/clowwindy" title="View all posts tagged clowwindy">clowwindy</a></li><li><a href="https://renwole.com/tags/python" title="View all posts tagged Python">Python</a></li><li><a href="https://renwole.com/tags/shadowsocks" title="View all posts tagged shadowsocks">shadowsocks</a></li><li><a href="https://renwole.com/tags/ss" title="View all posts tagged ss">ss</a></li><li><a href="https://renwole.com/tags/ssserver" title="View all posts tagged SSServer">SSServer</a></li><li><a href="https://renwole.com/tags/%e7%a7%91%e5%ad%a6%e4%b8%8a%e7%bd%91" title="View all posts tagged 科学上网">科学上网</a></li></ul></div>			<nav class="further-reading">
+	<div class="previous">
+		<span>Previous Post</span>
+		<a href="https://renwole.com/archives/625" rel="prev">ElasticSearch 之 Kibana 二进制安装配置</a>	</div>
+	<div class="next">
+		<span>Next Post</span>
+		<a href="https://renwole.com/archives/771" rel="next">vim 命令编辑 Hosts 文件 详细使用方法</a>	</div>
+</nav>		</div>
+	</article>
+	
+    <section id="comments" class="comments">
+        <div class="comments-number">
+            <h2>
+                Be First to Comment            </h2>
+        </div>
+        <ol class="comment-list">
+                    </ol>
+                	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://renwole.com/archives/746#respond" style="display:none;">取消回复</a></small></h3>			<form action="https://renwole.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span> 必填项已用<span class="required">*</span>标注</p><p class="comment-form-comment">
+	            <label for="comment">Comment</label>
+	            <textarea required="" id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+	        </p><p class="comment-form-author">
+	            <label for="author">Name*</label>
+	            <input id="author" name="author" type="text" placeholder="Jane Doe" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-email">
+	            <label for="email">Email*</label>
+	            <input id="email" name="email" type="email" placeholder="name@email.com" value="" size="30" aria-required="true">
+	        </p>
+<p class="comment-form-url">
+	            <label for="url">Website</label>
+	            <input id="url" name="url" type="url" placeholder="http://google.com" value="" size="30">
+	            </p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"> <input type="hidden" name="comment_post_ID" value="746" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="31cf1f51ed"></p><p style="display: none;"></p>			<input type="hidden" id="ak_js" name="ak_js" value="1551518294646"></form>
+			</div><!-- #respond -->
+	    </section>
+    </div>    </div>
+
+</section> <!-- .main -->
+
+
+<footer id="site-footer" class="site-footer" role="contentinfo">
+        <div class="design-credit">
+        <span>
+            Copyright 2017 by Renwole.All rights reserved<a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" rel="designer">粤ICP备16117021号</a>
+</span>
+    </div>
+</footer>
+</div>
+</div><!-- .overflow-container -->
+
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var ct_cele_objectL10n = {"openMenu":"open menu","closeMenu":"close menu","openChildMenu":"open dropdown menu","closeChildMenu":"close dropdown menu"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/production.min.js"></script>
+<script type="text/javascript" src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/comment-reply.min.js"></script>
+<script type="text/javascript" src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/wp-embed.min.js"></script>
+<script async="async" type="text/javascript" src="./CentOS 7系统配置 SSServer 实现科学上网 - 任我乐_files/form.js"></script>
+
+
+</body></html>
