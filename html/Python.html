@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://www.cnblogs.com/sss4/p/7809821.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="origin">
+    <title>Python爬虫原理 - Python开发之路 - 博客园</title>
+<meta property="og:description" content="前言 简单来说互联网是由一个个站点和网络设备组成的大网，我们通过浏览器访问站点，站点把HTML、JS、CSS代码返回给浏览器，这些代码经过浏览器解析、渲染，将丰富多彩的网页呈现我们眼前； 一、爬虫是什">
+    <link type="text/css" rel="stylesheet" href="./Python_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Python_files/bundle-nature.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./Python_files/bundle-nature-mobile.css">
+    <link title="RSS" type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/sss4/rss">
+    <link title="RSD" type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/sss4/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/sss4/wlwmanifest.xml">
+    <script async="" src="./Python_files/analytics.js"></script><script type="text/javascript" src="./Python_files/encoder.js"></script><script src="./Python_files/jquery-2.2.0.min.js"></script>
+    <script>var currentBlogId=339386;var currentBlogApp='sss4',cb_enable_mathjax=false;var isLogined=false;</script>
+    <script src="./Python_files/blog-common.js" type="text/javascript"></script>
+<link rel="preload" href="./Python_files/f.txt" as="script"><script type="text/javascript" src="./Python_files/f.txt"></script><script src="./Python_files/pubads_impl_319.js" async=""></script></head>
+<body>
+<a name="top"></a>
+
+
+<!--done-->
+<div id="banner"><div id="bnr_pic">
+<!--done-->
+<div class="header">
+	<div class="headerText">
+		<a id="Header1_HeaderTitle" class="headermaintitle" href="https://www.cnblogs.com/sss4/">Python</a><br>
+	</div><br>
+	<div class="headerDis"></div>
+</div>
+</div></div>
+<div id="main">
+	<!-- left starts -->
+	<div id="left">
+		<div id="mystats">
+			<br>
+				<div id="blog_stats">
+<!--done-->
+<div class="blogStats">
+随笔 - 95&nbsp;
+文章 - 1&nbsp;
+评论 - 33&nbsp;
+
+</div></div>
+			
+		</div>
+		<div id="mylinks">
+<!--done-->
+<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">博客园</a>&nbsp;&nbsp;<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/sss4/">首页</a>&nbsp;&nbsp;<a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a>&nbsp;&nbsp;<a id="blog_nav_contact" accesskey="9" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/Python%E5%BC%80%E5%8F%91%E4%B9%8B%E8%B7%AF">联系</a>&nbsp;&nbsp;<a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a>&nbsp;&nbsp;<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/sss4/rss">订阅</a>&nbsp;<a id="blog_nav_rss_image" href="https://www.cnblogs.com/sss4/rss"><img src="./Python_files/xml.gif" alt="订阅"></a></div>
+		<div id="topics">
+			
+        <div id="post_detail">
+<div class="post">
+	<div class="postTitle">
+		<h1><a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/sss4/p/7809821.html">Python爬虫原理</a></h1>
+	</div>
+	<div id="cnblogs_post_body" class="blogpost-body"><h2>&nbsp;</h2>
+<h2>前言</h2>
+<p>简单来说互联网是由一个个站点和网络设备组成的大网，我们通过浏览器访问站点，站点把HTML、JS、CSS代码返回给浏览器，这些代码经过浏览器解析、渲染，将丰富多彩的网页呈现我们眼前；</p>
+<p>&nbsp;</p>
+<h2>一、爬虫是什么？</h2>
+<p>如果我们把互联网比作一张大的蜘蛛网，数据便是存放于蜘蛛网的各个节点，而爬虫就是一只小蜘蛛，</p>
+<p>沿着网络抓取自己的猎物（数据）爬虫指的是：向网站发起请求，获取资源后分析并提取有用数据的程序；</p>
+<p>从技术层面来说就是 通过程序模拟浏览器请求站点的行为，把站点返回的HTML代码/JSON数据/二进制数据（图片、视频） 爬到本地，进而提取自己需要的数据，存放起来使用；</p>
+<p>&nbsp;</p>
+<h2><img src="./Python_files/1122865-20171109155619981-1355599979.png" alt=""></h2>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>二、爬虫的基本流程：</h2>
+<p>&nbsp;</p>
+<p>用户获取网络数据的方式：</p>
+<p>方式1：浏览器提交请求---&gt;下载网页代码---&gt;解析成页面</p>
+<p>方式2：模拟浏览器发送请求(获取网页代码)-&gt;提取有用的数据-&gt;存放于数据库或文件中</p>
+<p>爬虫要做的就是方式2；</p>
+<p>&nbsp;<img src="./Python_files/1122865-20171109155753419-1411600537.png" alt=""></p>
+<p><strong>1、发起请求</strong></p>
+<p><span style="color: #ff0000">使用http库向目标站点发起请求，即发送一个Request</span></p>
+<p>Request包含：请求头、请求体等&nbsp;</p>
+<p><span style="color: #ff0000">Request模块缺陷：不能执行JS 和CSS 代码</span></p>
+<p>&nbsp;</p>
+<p><strong>2、获取响应内容</strong></p>
+<p>如果服务器能正常响应，则会得到一个Response</p>
+<p>Response包含：html，json，图片，视频等</p>
+<p>&nbsp;</p>
+<p><strong>3、解析内容</strong></p>
+<p>解析html数据：<span style="color: #ff0000">正则表达式（RE模块），第三方解析库如Beautifulsoup，pyquery等</span></p>
+<p>解析json数据：json模块</p>
+<p>解析二进制数据:以wb的方式写入文件</p>
+<p>&nbsp;</p>
+<p><strong>4、保存数据</strong></p>
+<p>数据库（MySQL，Mongdb、Redis）</p>
+<p>文件</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>三、http协议 请求与响应</h2>
+<p><img src="./Python_files/1122865-20171109162243872-1491006257.png" alt=""></p>
+<p>&nbsp;</p>
+<p>Request：用户将自己的信息通过浏览器（socket client）发送给服务器（socket server）</p>
+<p>Response：服务器接收请求，分析用户发来的请求信息，然后返回数据（返回的数据中可能包含其他链接，如：图片，js，css等）</p>
+<p>ps：浏览器在接收Response后，会解析其内容来显示给用户，而爬虫程序在模拟浏览器发送请求然后接收Response后，是要提取其中的有用数据。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>四、 request</h2>
+<p><strong>1、请求方式：</strong></p>
+<p>常见的请求方式：GET / POST</p>
+<p>&nbsp;</p>
+<p><strong>2、请求的URL</strong></p>
+<p>url全球统一资源定位符，用来定义互联网上一个唯一的资源 例如：一张图片、一个文件、一段视频都可以用url唯一确定</p>
+<p>&nbsp;</p>
+<p>url编码</p>
+<p>https://www.baidu.com/s?wd=图片</p>
+<p>图片会被编码（看示例代码）</p>
+<p>&nbsp;</p>
+<p>网页的加载过程是：</p>
+<p>加载一个网页，通常都是先加载document文档，</p>
+<p>在解析document文档的时候，遇到链接，则针对超链接发起下载图片的请求</p>
+<p>&nbsp;</p>
+<p><strong>3、请求头</strong></p>
+<p>User-agent：请求头中如果没有user-agent客户端配置，服务端可能将你当做一个非法用户host；</p>
+<p>cookies：cookie用来保存登录信息</p>
+<p><span style="color: #ff0000">注意： 一般做爬虫都会加上请求头</span></p>
+<p><img src="./Python_files/1122865-20171109164328044-1812809779.png" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="./Python_files/1122865-20171109165932544-1148817400.png" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="./Python_files/1122865-20171109165421872-1350037263.png" alt=""></p>
+<p>&nbsp;</p>
+<p><strong>请求头需要注意的参数：</strong></p>
+<p><span style="color: #ff0000">（1）Referrer：访问源至哪里来（一些大型网站，会通过Referrer 做防盗链策略；所有爬虫也要注意模拟）</span></p>
+<p><span style="color: #ff0000">（2）User-Agent:访问的浏览器（要加上否则会被当成爬虫程序）</span></p>
+<p><span style="color: #ff0000">（3）cookie：请求头注意携带</span></p>
+<p>&nbsp;</p>
+<p><strong><span style="color: #000000">4、请求体</span></strong></p>
+<pre>请求体
+    如果是get方式，请求体没有内容 <span style="color: #ff0000">（get请求的请求体放在 url后面参数中，直接能看到）</span>
+    如果是post方式，请求体是format data
+
+    ps：
+    1、登录窗口，文件上传等，信息都会被附加到请求体内
+    2、登录，输入错误的用户名密码，然后提交，就可以看到post，正确登录后页面通常会跳转，无法捕捉到post</pre>
+<p>&nbsp;</p>
+<h2>五、 响应Response</h2>
+<p><strong>1、响应状态码</strong></p>
+<p><strong>　　</strong>200：代表成功</p>
+<p>　　301：代表跳转</p>
+<p>　　404：文件不存在</p>
+<p>　　403：无权限访问</p>
+<p>　　502：服务器错误</p>
+<p>&nbsp;</p>
+<p><strong>2、respone header</strong></p>
+<p><br><strong>响应头需要注意的参数：</strong></p>
+<p><span style="color: #ff0000">（1）Set-Cookie:BDSVRTM=0; path=/：可能有多个，是来告诉浏览器，把cookie保存下来</span></p>
+<p><span style="color: #ff0000">（2）Content-Location：服务端响应头中包含Location返回浏览器之后，浏览器就会重新访问另一个页面</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>3、preview就是网页源代码</strong></p>
+<p>JSO数据</p>
+<p>如网页html，图片</p>
+<p>二进制数据等&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>六、总结</h2>
+<p><strong>1、总结爬虫流程：</strong></p>
+<p>&nbsp;爬取---&gt;解析---&gt;存储</p>
+<p>&nbsp;</p>
+<p><strong>2、爬虫所需工具：</strong></p>
+<p>&nbsp;请求库：requests,<span style="color: #ff0000">selenium（可以驱动浏览器解析渲染CSS和JS，但有性能劣势（有用没用的网页都会加载）；）<br></span>&nbsp;解析库：正则，beautifulsoup，pyquery<br>&nbsp;存储库：文件，MySQL，Mongodb，Redis</p>
+<p>&nbsp;</p>
+<p><strong>3、爬获校花网</strong></p>
+<p>最后送给大家点福利吧<img src="./Python_files/1122865-20171109204929981-337261501.png" alt=""></p>
+<p>基础版：</p>
+<div class="cnblogs_code"><img id="code_img_closed_b538ac40-f10a-4f5c-a7ae-424a41681d7a" class="code_img_closed" src="./Python_files/ContractedBlock.gif" alt="" style="display: none;"><img id="code_img_opened_b538ac40-f10a-4f5c-a7ae-424a41681d7a" class="code_img_opened" style="" src="./Python_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_b538ac40-f10a-4f5c-a7ae-424a41681d7a" class="cnblogs_code_hide" style="display: block;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Python_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff">import</span><span style="color: #000000"> re
+</span><span style="color: #0000ff">import</span><span style="color: #000000"> requests
+
+respose</span>=requests.get(<span style="color: #800000">'</span><span style="color: #800000">http://www.xiaohuar.com/v/</span><span style="color: #800000">'</span><span style="color: #000000">)
+</span><span style="color: #008000">#</span><span style="color: #008000"> print(respose.status_code)# 响应的状态码</span><span style="color: #008000">
+#</span><span style="color: #008000"> print(respose.content)  #返回字节信息</span><span style="color: #008000">
+#</span><span style="color: #008000"> print(respose.text)  #返回文本内容</span>
+urls=re.findall(r<span style="color: #800000">'</span><span style="color: #800000">class="items".*?href="(.*?)"</span><span style="color: #800000">'</span>,respose.text,re.S)  <span style="color: #008000">#</span><span style="color: #008000">re.S 把文本信息转换成1行匹配</span>
+url=urls[5<span style="color: #000000">]
+result</span>=<span style="color: #000000">requests.get(url)
+mp4_url</span>=re.findall(r<span style="color: #800000">'</span><span style="color: #800000">id="media".*?src="(.*?)"</span><span style="color: #800000">'</span><span style="color: #000000">,result.text,re.S)[0]
+
+video</span>=<span style="color: #000000">requests.get(mp4_url)
+
+with open(</span><span style="color: #800000">'</span><span style="color: #800000">D:\\a.mp4</span><span style="color: #800000">'</span>,<span style="color: #800000">'</span><span style="color: #800000">wb</span><span style="color: #800000">'</span><span style="color: #000000">) as f:
+    f.write(video.content)</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Python_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: none;">View Code</span></div>
+<p>&nbsp;</p>
+<p>函数封装版</p>
+<div class="cnblogs_code"><img id="code_img_closed_190a9b5e-8166-4d91-a8ae-c147f0a3cde3" class="code_img_closed" src="./Python_files/ContractedBlock.gif" alt="" style="display: none;"><img id="code_img_opened_190a9b5e-8166-4d91-a8ae-c147f0a3cde3" class="code_img_opened" style="" src="./Python_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_190a9b5e-8166-4d91-a8ae-c147f0a3cde3" class="cnblogs_code_hide" style="display: block;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Python_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff">import</span><span style="color: #000000"> re
+</span><span style="color: #0000ff">import</span><span style="color: #000000"> requests
+</span><span style="color: #0000ff">import</span><span style="color: #000000"> hashlib
+</span><span style="color: #0000ff">import</span><span style="color: #000000"> time
+
+</span><span style="color: #008000">#</span><span style="color: #008000"> respose=requests.get('http://www.xiaohuar.com/v/')</span><span style="color: #008000">
+#</span><span style="color: #008000"> # print(respose.status_code)# 响应的状态码</span><span style="color: #008000">
+#</span><span style="color: #008000"> # print(respose.content)  #返回字节信息</span><span style="color: #008000">
+#</span><span style="color: #008000"> # print(respose.text)  #返回文本内容</span><span style="color: #008000">
+#</span><span style="color: #008000"> urls=re.findall(r'class="items".*?href="(.*?)"',respose.text,re.S)  #re.S 把文本信息转换成1行匹配</span><span style="color: #008000">
+#</span><span style="color: #008000"> url=urls[5]</span><span style="color: #008000">
+#</span><span style="color: #008000"> result=requests.get(url)</span><span style="color: #008000">
+#</span><span style="color: #008000"> mp4_url=re.findall(r'id="media".*?src="(.*?)"',result.text,re.S)[0]</span><span style="color: #008000">
+#
+#</span><span style="color: #008000"> video=requests.get(mp4_url)</span><span style="color: #008000">
+#
+#</span><span style="color: #008000"> with open('D:\\a.mp4','wb') as f:</span><span style="color: #008000">
+#</span><span style="color: #008000">     f.write(video.content)</span><span style="color: #008000">
+#
+</span>
+
+<span style="color: #0000ff">def</span><span style="color: #000000"> get_index(url):
+    respose </span>=<span style="color: #000000"> requests.get(url)
+    </span><span style="color: #0000ff">if</span> respose.status_code==200<span style="color: #000000">:
+        </span><span style="color: #0000ff">return</span><span style="color: #000000"> respose.text
+
+</span><span style="color: #0000ff">def</span><span style="color: #000000"> parse_index(res):
+    urls </span>= re.findall(r<span style="color: #800000">'</span><span style="color: #800000">class="items".*?href="(.*?)"</span><span style="color: #800000">'</span>, res,re.S)  <span style="color: #008000">#</span><span style="color: #008000"> re.S 把文本信息转换成1行匹配</span>
+    <span style="color: #0000ff">return</span><span style="color: #000000"> urls
+
+
+</span><span style="color: #0000ff">def</span><span style="color: #000000"> get_detail(urls):
+    </span><span style="color: #0000ff">for</span> url <span style="color: #0000ff">in</span><span style="color: #000000"> urls:
+        </span><span style="color: #0000ff">if</span> <span style="color: #0000ff">not</span> url.startswith(<span style="color: #800000">'</span><span style="color: #800000">http</span><span style="color: #800000">'</span><span style="color: #000000">):
+            url</span>=<span style="color: #800000">'</span><span style="color: #800000">http://www.xiaohuar.com%s</span><span style="color: #800000">'</span> %<span style="color: #000000">url
+        result </span>=<span style="color: #000000"> requests.get(url)
+        </span><span style="color: #0000ff">if</span> result.status_code==200<span style="color: #000000"> :
+            mp4_url_list </span>= re.findall(r<span style="color: #800000">'</span><span style="color: #800000">id="media".*?src="(.*?)"</span><span style="color: #800000">'</span><span style="color: #000000">, result.text, re.S)
+            </span><span style="color: #0000ff">if</span><span style="color: #000000"> mp4_url_list:
+                mp4_url</span>=<span style="color: #000000">mp4_url_list[0]
+                </span><span style="color: #0000ff">print</span><span style="color: #000000">(mp4_url)
+                </span><span style="color: #008000">#</span><span style="color: #008000"> save(mp4_url)</span>
+
+
+<span style="color: #0000ff">def</span><span style="color: #000000"> save(url):
+    video </span>=<span style="color: #000000"> requests.get(url)
+    </span><span style="color: #0000ff">if</span> video.status_code==200<span style="color: #000000">:
+        m</span>=<span style="color: #000000">hashlib.md5()
+        m.updata(url.encode(</span><span style="color: #800000">'</span><span style="color: #800000">utf-8</span><span style="color: #800000">'</span><span style="color: #000000">))
+        m.updata(str(time.time()).encode(</span><span style="color: #800000">'</span><span style="color: #800000">utf-8</span><span style="color: #800000">'</span><span style="color: #000000">))
+        filename</span>=r<span style="color: #800000">'</span><span style="color: #800000">%s.mp4</span><span style="color: #800000">'</span>%<span style="color: #000000"> m.hexdigest()
+        filepath</span>=r<span style="color: #800000">'</span><span style="color: #800000">D:\\%s</span><span style="color: #800000">'</span>%<span style="color: #000000">filename
+        with open(filepath, </span><span style="color: #800000">'</span><span style="color: #800000">wb</span><span style="color: #800000">'</span><span style="color: #000000">) as f:
+            f.write(video.content)
+
+</span><span style="color: #0000ff">def</span><span style="color: #000000"> main():
+    </span><span style="color: #0000ff">for</span> i <span style="color: #0000ff">in</span> range(5<span style="color: #000000">):
+        res1 </span>= get_index(<span style="color: #800000">'</span><span style="color: #800000">http://www.xiaohuar.com/list-3-%s.html</span><span style="color: #800000">'</span>%<span style="color: #000000"> i )
+        res2 </span>=<span style="color: #000000"> parse_index(res1)
+        get_detail(res2)
+
+</span><span style="color: #0000ff">if</span> <span style="color: #800080">__name__</span> == <span style="color: #800000">'</span><span style="color: #800000">__main__</span><span style="color: #800000">'</span><span style="color: #000000">:
+    main()</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Python_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: none;">View Code</span></div>
+<p>&nbsp;</p>
+<p>并发版（如果一共需要爬30个视频，开30个线程去做，花的时间就是 其中最慢那份的耗时时间）</p>
+<div class="cnblogs_code"><img id="code_img_closed_e4f47d03-54d0-4afb-afa7-8e86c5a1b5a8" class="code_img_closed" src="./Python_files/ContractedBlock.gif" alt=""><img id="code_img_opened_e4f47d03-54d0-4afb-afa7-8e86c5a1b5a8" class="code_img_opened" style="display: none" src="./Python_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_e4f47d03-54d0-4afb-afa7-8e86c5a1b5a8" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff">import</span><span style="color: #000000"> re
+</span><span style="color: #0000ff">import</span><span style="color: #000000"> requests
+</span><span style="color: #0000ff">import</span><span style="color: #000000"> hashlib
+</span><span style="color: #0000ff">import</span><span style="color: #000000"> time
+</span><span style="color: #0000ff">from</span> concurrent.futures <span style="color: #0000ff">import</span><span style="color: #000000"> ThreadPoolExecutor
+p</span>=ThreadPoolExecutor(30) <span style="color: #008000">#</span><span style="color: #008000">创建1个程池中，容纳线程个数为30个；</span>
+
+
+<span style="color: #0000ff">def</span><span style="color: #000000"> get_index(url):
+    respose </span>=<span style="color: #000000"> requests.get(url)
+    </span><span style="color: #0000ff">if</span> respose.status_code==200<span style="color: #000000">:
+        </span><span style="color: #0000ff">return</span><span style="color: #000000"> respose.text
+
+</span><span style="color: #0000ff">def</span><span style="color: #000000"> parse_index(res):
+    res</span>=res.result() <span style="color: #008000">#</span><span style="color: #008000">进程执行完毕后，得到1个对象</span>
+    urls = re.findall(r<span style="color: #800000">'</span><span style="color: #800000">class="items".*?href="(.*?)"</span><span style="color: #800000">'</span>, res,re.S)  <span style="color: #008000">#</span><span style="color: #008000"> re.S 把文本信息转换成1行匹配</span>
+    <span style="color: #0000ff">for</span> url <span style="color: #0000ff">in</span><span style="color: #000000"> urls:
+        p.submit(get_detail(url))  </span><span style="color: #008000">#</span><span style="color: #008000">获取详情页 提交到线程池</span>
+
+
+
+<span style="color: #0000ff">def</span> get_detail(url):  <span style="color: #008000">#</span><span style="color: #008000">只下载1个视频</span>
+        <span style="color: #0000ff">if</span> <span style="color: #0000ff">not</span> url.startswith(<span style="color: #800000">'</span><span style="color: #800000">http</span><span style="color: #800000">'</span><span style="color: #000000">):
+            url</span>=<span style="color: #800000">'</span><span style="color: #800000">http://www.xiaohuar.com%s</span><span style="color: #800000">'</span> %<span style="color: #000000">url
+        result </span>=<span style="color: #000000"> requests.get(url)
+        </span><span style="color: #0000ff">if</span> result.status_code==200<span style="color: #000000"> :
+            mp4_url_list </span>= re.findall(r<span style="color: #800000">'</span><span style="color: #800000">id="media".*?src="(.*?)"</span><span style="color: #800000">'</span><span style="color: #000000">, result.text, re.S)
+            </span><span style="color: #0000ff">if</span><span style="color: #000000"> mp4_url_list:
+                mp4_url</span>=<span style="color: #000000">mp4_url_list[0]
+                </span><span style="color: #0000ff">print</span><span style="color: #000000">(mp4_url)
+                </span><span style="color: #008000">#</span><span style="color: #008000"> save(mp4_url)</span>
+
+
+<span style="color: #0000ff">def</span><span style="color: #000000"> save(url):
+    video </span>=<span style="color: #000000"> requests.get(url)
+    </span><span style="color: #0000ff">if</span> video.status_code==200<span style="color: #000000">:
+        m</span>=<span style="color: #000000">hashlib.md5()
+        m.updata(url.encode(</span><span style="color: #800000">'</span><span style="color: #800000">utf-8</span><span style="color: #800000">'</span><span style="color: #000000">))
+        m.updata(str(time.time()).encode(</span><span style="color: #800000">'</span><span style="color: #800000">utf-8</span><span style="color: #800000">'</span><span style="color: #000000">))
+        filename</span>=r<span style="color: #800000">'</span><span style="color: #800000">%s.mp4</span><span style="color: #800000">'</span>%<span style="color: #000000"> m.hexdigest()
+        filepath</span>=r<span style="color: #800000">'</span><span style="color: #800000">D:\\%s</span><span style="color: #800000">'</span>%<span style="color: #000000">filename
+        with open(filepath, </span><span style="color: #800000">'</span><span style="color: #800000">wb</span><span style="color: #800000">'</span><span style="color: #000000">) as f:
+            f.write(video.content)
+
+</span><span style="color: #0000ff">def</span><span style="color: #000000"> main():
+    </span><span style="color: #0000ff">for</span> i <span style="color: #0000ff">in</span> range(5<span style="color: #000000">):
+        p.submit(get_index,</span><span style="color: #800000">'</span><span style="color: #800000">http://www.xiaohuar.com/list-3-%s.html</span><span style="color: #800000">'</span>%<span style="color: #000000"> i ).add_done_callback(parse_index)
+        </span><span style="color: #008000">#</span><span style="color: #008000">1、先把爬主页的任务（get_index）异步提交到线程池</span>
+        <span style="color: #008000">#</span><span style="color: #008000">2、get_index任务执行完后，会通过回调函add_done_callback（）数通知主线程，任务完成；</span>
+        <span style="color: #008000">#</span><span style="color: #008000">2、把get_index执行结果（注意线程执行结果是对象，调用res=res.result()方法，才能获取真正执行结果），当做参数传给parse_index</span>
+        <span style="color: #008000">#</span><span style="color: #008000">3、parse_index任务执行完毕后，</span>
+        <span style="color: #008000">#</span><span style="color: #008000">4、通过循环，再次把获取详情页 get_detail（）任务提交到线程池执行</span>
+
+
+
+<span style="color: #0000ff">if</span> <span style="color: #800080">__name__</span> == <span style="color: #800000">'</span><span style="color: #800000">__main__</span><span style="color: #800000">'</span><span style="color: #000000">:
+    main()</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;</p>
+<p><strong>涉及知识：多线程多进程</strong></p>
+<p>计算密集型任务：使用多进程，因为能Python有GIL，多进程可以利用上CPU多核优势；</p>
+<p>IO密集型任务：使用多线程，做IO切换节省任务执行时间（并发）</p>
+<p>线程池</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>参考博客：</p>
+<p>瞎驴<a href="http://www.cnblogs.com/linhaifeng/articles/7773496.html" target="_blank">http://www.cnblogs.com/linhaifeng/articles/7773496.html</a><a target="_blank"><br></a></p>
+<pre><br><br><br></pre></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="https://www.cnblogs.com/sss4/category/1269021.html" target="_blank">爬虫相关</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(7809821,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;40ec1045-5d05-e711-845c-ac853d9f53ac&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Python_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Python_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/sss4/" target="_blank"><img src="./Python_files/20181220091626.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/sss4/">Python开发之路</a><br>
+            <a href="http://home.cnblogs.com/u/sss4/followees">关注 - 28</a><br>
+            <a href="http://home.cnblogs.com/u/sss4/followers">粉丝 - 167</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;40ec1045-5d05-e711-845c-ac853d9f53ac&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(7809821,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">12</span>
+    </div>
+    <div class="buryit" onclick="votePost(7809821,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/sss4/p/7717588.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/sss4/p/7717588.html" title="发布于2017-10-23 16:41">Python面向对象之继承</a><br><a href="https://www.cnblogs.com/sss4/p/7813379.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/sss4/p/7813379.html" title="发布于2017-11-10 10:43">浏览器行为模拟之requests、selenium模块</a><br></div>
+</div>
+
+
+	<div class="postDesc">posted on <span id="post-date">2017-11-09 15:57</span> <a href="https://www.cnblogs.com/sss4/">Python开发之路</a> 阅读(<span id="post_view_count">192753</span>) 评论(<span id="post_comment_count">7</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=7809821" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/sss4/p/7809821.html#" onclick="AddToWz(7809821);return false;">收藏</a></div>
+</div>
+<script type="text/javascript">var allowComments=true,cb_blogId=339386,cb_entryId=7809821,cb_blogApp=currentBlogApp,cb_blogUserGuid='40ec1045-5d05-e711-845c-ac853d9f53ac',cb_entryCreatedDate='2017/11/9 15:57:00';loadViewCount(cb_entryId);var cb_postType=1;var isMarkdown=false;</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<br>
+<div class="feedback_area_title">发表评论</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/sss4/p/7809821.html#3949498" class="layer">#1楼</a><a name="3949498" id="comment_anchor_3949498"></a>  <span class="comment_date">2018-04-12 08:56</span> | <a id="a_comment_author_3949498" class="feedbackmanagelink" href="http://home.cnblogs.com/u/1354313/" target="_blank">分光化影</a> <a href="http://msg.cnblogs.com/send/%E5%88%86%E5%85%89%E5%8C%96%E5%BD%B1" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3949498" class="blog_comment_body">学习了<br>Python 入门指南:<a href="http://www.jqhtml.com/9130.html" target="_blank">http://www.jqhtml.com/9130.html</a></div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3949498,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3949498,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/sss4/p/7809821.html#3951296" class="layer">#2楼</a><a name="3951296" id="comment_anchor_3951296"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2018-04-14 10:56</span> | <a id="a_comment_author_3951296" class="feedbackmanagelink" href="https://www.cnblogs.com/sss4/" target="_blank">Python开发之路</a> <a href="http://msg.cnblogs.com/send/Python%E5%BC%80%E5%8F%91%E4%B9%8B%E8%B7%AF" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3951296" class="blog_comment_body"><a href="https://www.cnblogs.com/sss4/p/7809821.html#3949498" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3949498);">@</a>
+分光化影</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3951296,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3951296,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3951296_avatar" style="display:none;">http://pic.cnblogs.com/face/1122865/20181220091626.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/sss4/p/7809821.html#3951297" class="layer">#3楼</a><a name="3951297" id="comment_anchor_3951297"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2018-04-14 10:57</span> | <a id="a_comment_author_3951297" class="feedbackmanagelink" href="https://www.cnblogs.com/sss4/" target="_blank">Python开发之路</a> <a href="http://msg.cnblogs.com/send/Python%E5%BC%80%E5%8F%91%E4%B9%8B%E8%B7%AF" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3951297" class="blog_comment_body"><a href="https://www.cnblogs.com/sss4/p/7809821.html#3949498" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3949498);">@</a>
+分光化影<br>是</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3951297,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3951297,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3951297_avatar" style="display:none;">http://pic.cnblogs.com/face/1122865/20181220091626.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/sss4/p/7809821.html#4009502" class="layer">#4楼</a><a name="4009502" id="comment_anchor_4009502"></a>  <span class="comment_date">2018-06-30 17:03</span> | <a id="a_comment_author_4009502" class="feedbackmanagelink" href="https://www.cnblogs.com/walkalone/" target="_blank">aiaigerui</a> <a href="http://msg.cnblogs.com/send/aiaigerui" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4009502" class="blog_comment_body">厉害了，大兄弟</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4009502,&#39;Digg&#39;,this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4009502,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_4009502_avatar" style="display:none;">http://pic.cnblogs.com/face/996011/20180518124413.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/sss4/p/7809821.html#4010929" class="layer">#5楼</a><a name="4010929" id="comment_anchor_4010929"></a>  <span class="comment_date">2018-07-02 17:40</span> | <a id="a_comment_author_4010929" class="feedbackmanagelink" href="https://www.cnblogs.com/talen/" target="_blank">Namikun</a> <a href="http://msg.cnblogs.com/send/Namikun" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4010929" class="blog_comment_body">会报错requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4010929,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4010929,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_4010929_avatar" style="display:none;">http://pic.cnblogs.com/face/719194/20160502202629.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/sss4/p/7809821.html#4057775" class="layer">#6楼</a><a name="4057775" id="comment_anchor_4057775"></a>  <span class="comment_date">2018-09-04 16:57</span> | <a id="a_comment_author_4057775" class="feedbackmanagelink" href="https://www.cnblogs.com/hhb-newEarth/" target="_blank">圣所</a> <a href="http://msg.cnblogs.com/send/%E5%9C%A3%E6%89%80" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4057775" class="blog_comment_body">你好 Mac 系统 不存在分区<br>这个路径如何修改一下<br>with open('D:\\a.mp4','wb') as f:<br>    f.write(video.content)</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4057775,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4057775,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_4057775_avatar" style="display:none;">http://pic.cnblogs.com/face/u276070.jpg?id=12113008</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/sss4/p/7809821.html#4198600" class="layer">#7楼</a><a name="4198600" id="comment_anchor_4198600"></a><span id="comment-maxId" style="display:none;">4198600</span><span id="comment-maxDate" style="display:none;">2019/3/11 9:26:58</span>  <span class="comment_date">2019-03-11 09:26</span> | <a id="a_comment_author_4198600" class="feedbackmanagelink" href="http://home.cnblogs.com/u/1622676/" target="_blank">代理ip</a> <a href="http://msg.cnblogs.com/send/%E4%BB%A3%E7%90%86ip" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4198600" class="blog_comment_body">提供VPN.VPS.HTTP.S5动态IP</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4198600,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4198600,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/sss4/p/7809821.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/sss4/p/7809821.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="https://www.cnblogs.com/cmt/p/10496052.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-51CTO&#39;)">【课程】开学季给程序员们送福利啦！限量X-box等你来拿！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万C++/C#源码: 大型实时仿真组态图形源码</a><br><a href="https://cloud.baidu.com/campaign/purchase-2019/index.html?track=cp:dsp|pf:pc|pp:chui-bokeyuan-huodong-19caigouji-BCC-neiyeCH-190311|pu:neiyeCH-wenzilian|ci:2019cgj|kw:2105959" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-百度云&#39;)">【推荐】百度云“猪”你开年行大运，红包疯狂拿</a><br><a href="https://news.cnblogs.com/n/621139/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-Open Source Summit&#39;)">【活动】2019开源技术盛宴(6.24~26上海世博中心)</a><br><a href="https://ke.qq.com/adActivity.html?name=xiangxueketang2" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【推荐】55K刚面完Java架构师岗，这些技术你必须掌握</a><br></div>
+<div id="opt_under_post"></div>
+<script async="async" src="./Python_files/gpt.js"></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+<script>
+  googletag.cmd.push(function() {
+        googletag.defineSlot('/1090369/C1', [300, 250], 'div-gpt-ad-1546353474406-0').addService(googletag.pubads());
+        googletag.defineSlot('/1090369/C2', [468, 60], 'div-gpt-ad-1539008685004-0').addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+  });
+</script>
+<div id="cnblogs_c1" class="c_ad_block">
+    <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;"></div>
+</div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>相关博文：</b><br>·  <a href="https://www.cnblogs.com/SeekHit/p/6089397.html" target="_blank" onclick="clickRecomItmem(undefined,&#39;undefined&#39;)">【Python网络爬虫一】爬虫原理和URL基本构成</a><br>·  <a href="https://www.cnblogs.com/zhaof/p/6898138.html" target="_blank" onclick="clickRecomItmem(undefined,&#39;undefined&#39;)">python爬虫从入门到放弃（二）之爬虫的原理</a><br>·  <a href="https://www.cnblogs.com/voidking/p/python-crawler-base.html" target="_blank" onclick="clickRecomItmem(undefined,&#39;undefined&#39;)">Python爬虫基础</a><br>·  <a href="https://www.cnblogs.com/arxive/p/6194369.html" target="_blank" onclick="clickRecomItmem(undefined,&#39;undefined&#39;)">Python分布式爬虫原理</a><br>·  <a href="https://www.cnblogs.com/Issac-Gan/p/6500619.html" target="_blank" onclick="clickRecomItmem(undefined,&#39;undefined&#39;)">python爬虫学习（一）——爬虫的工作原理</a><br></div></div>
+<div id="cnblogs_c2" class="c_ad_block">
+    <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;"></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block"><b>最新新闻</b>：<br> ·  <a href="https://news.cnblogs.com/n/621750/" target="_blank">AI看脸就知道性取向，不服气的做了一个实验，结果…</a><br> ·  <a href="https://news.cnblogs.com/n/621728/" target="_blank">任正非接受外媒采访：美国的恐吓战术只会吓走投资者</a><br> ·  <a href="https://news.cnblogs.com/n/621753/" target="_blank">我挖了一年比特币，做了个美妙的发财梦</a><br> ·  <a href="https://news.cnblogs.com/n/621757/" target="_blank">亏本、倒闭、残局：谁在“杀死”互联网家装</a><br> ·  <a href="https://news.cnblogs.com/n/621745/" target="_blank">特斯拉将在北京时间3月15日上午11时发布Model Y</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+ if(enablePostBottom()) {
+    codeHighlight();
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverT2();
+    deliverC1();
+    deliverC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);  
+}
+</script>
+</div>
+
+    
+		</div>
+	</div>
+	<!-- left ends -->
+	<!-- right starts -->
+	<div id="right">
+		<!-- 右侧工具部分 -->
+		<div id="right_content">
+	
+			
+<!--done-->
+<h2 class="listtitle">公告</h2>
+<div class="newsItem">
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/sss4/">Python开发之路</a><br>园龄：<a href="https://home.cnblogs.com/u/sss4/" title="入园时间：2017-03-10">2年</a><br>粉丝：<a href="https://home.cnblogs.com/u/sss4/followers/">167</a><br>关注：<a href="https://home.cnblogs.com/u/sss4/followees/">28</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;40ec1045-5d05-e711-845c-ac853d9f53ac&#39;)">+加关注</a></div><script>getFollowStatus('40ec1045-5d05-e711-845c-ac853d9f53ac')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+	
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/02/01&#39;);return false;">&lt;</a></td><td align="center">2019年3月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/04/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">24</td><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td align="center">1</td><td class="CalWeekendDay" align="center">2</td></tr><tr><td class="CalWeekendDay" align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td class="CalWeekendDay" align="center">9</td></tr><tr><td class="CalWeekendDay" align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center"><a href="https://www.cnblogs.com/sss4/archive/2019/03/13.html"><u>13</u></a></td><td class="CalTodayDay" align="center">14</td><td align="center">15</td><td class="CalWeekendDay" align="center">16</td></tr><tr><td class="CalWeekendDay" align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td class="CalWeekendDay" align="center">23</td></tr><tr><td class="CalWeekendDay" align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td class="CalWeekendDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+				<div id="leftcontentcontainer">
+					<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/sss4/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="https://www.cnblogs.com/sss4/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="https://www.cnblogs.com/sss4/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="https://www.cnblogs.com/sss4/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="https://www.cnblogs.com/sss4/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<!--done-->
+
+		<h1 class="catListTitle">随笔分类</h1>
+		
+				<ul>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_0" class="listitem" href="https://www.cnblogs.com/sss4/category/1319329.html">Django相关(5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_1" class="listitem" href="https://www.cnblogs.com/sss4/category/1345467.html">MySQL相关(5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_2" class="listitem" href="https://www.cnblogs.com/sss4/category/1269021.html">爬虫相关(6)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_3" class="listitem" href="https://www.cnblogs.com/sss4/category/1384825.html">前端(3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_4" class="listitem" href="https://www.cnblogs.com/sss4/category/1391899.html">数据分析(2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_5" class="listitem" href="https://www.cnblogs.com/sss4/category/1287982.html">英语语法(1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_0_Link_6" class="listitem" href="https://www.cnblogs.com/sss4/category/1418501.html">运维相关(1)</a>
+				</li>
+			
+				</ul>
+			
+	
+		<h1 class="catListTitle">随笔档案</h1>
+		
+				<ul>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_0" class="listitem" href="https://www.cnblogs.com/sss4/archive/2019/03.html">2019年3月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_1" class="listitem" href="https://www.cnblogs.com/sss4/archive/2019/02.html">2019年2月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_2" class="listitem" href="https://www.cnblogs.com/sss4/archive/2019/01.html">2019年1月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_3" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/12.html">2018年12月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_4" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/11.html">2018年11月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_5" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/10.html">2018年10月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_6" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/09.html">2018年9月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_7" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/08.html">2018年8月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_8" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/07.html">2018年7月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_9" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/06.html">2018年6月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_10" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/05.html">2018年5月 (1)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_11" class="listitem" href="https://www.cnblogs.com/sss4/archive/2018/02.html">2018年2月 (3)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_12" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/12.html">2017年12月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_13" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/11.html">2017年11月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_14" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/10.html">2017年10月 (5)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_15" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/09.html">2017年9月 (7)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_16" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/08.html">2017年8月 (2)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_17" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/07.html">2017年7月 (7)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_18" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/06.html">2017年6月 (12)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_19" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/05.html">2017年5月 (15)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_20" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/04.html">2017年4月 (12)</a>
+				</li>
+			
+				<li class="catList">
+				 <a id="CatList_LinkList_1_Link_21" class="listitem" href="https://www.cnblogs.com/sss4/archive/2017/03.html">2017年3月 (6)</a>
+				</li>
+			
+				</ul>
+			
+	
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<h3 class="catListTitle">最新评论</h3>
+<div class="RecentComment" id="RecentComments">
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/sss4/p/7809821.html#4198600">1. Re:Python爬虫原理</a></li>
+        <li class="recent_comment_body">提供VPN.VPS.HTTP.S5动态IP</li>
+        <li class="recent_comment_author">--代理ip</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/sss4/p/7070942.html#4104497">2. Re:Django之ORM操作</a></li>
+        <li class="recent_comment_body">@JeromeLong很高兴，认识你 一起学习吧~...</li>
+        <li class="recent_comment_author">--Python开发之路</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/sss4/p/7070942.html#4103994">3. Re:Django之ORM操作</a></li>
+        <li class="recent_comment_body">赞一个，model讲解的很完整</li>
+        <li class="recent_comment_author">--JeromeLong</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/sss4/p/7070942.html#4097899">4. Re:Django之ORM操作</a></li>
+        <li class="recent_comment_body">666，非常的不错，第一次看有文章讲解：content_type 表。</li>
+        <li class="recent_comment_author">--cranezhou</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/sss4/p/7070942.html#4088063">5. Re:Django之ORM操作</a></li>
+        <li class="recent_comment_body">怒赞，我收藏一下将来继续学习，暂时还没消化完。</li>
+        <li class="recent_comment_author">--丹华抱一鷇音子</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<h3 class="catListTitle">阅读排行榜</h3>
+<div class="RecentComment" id="TopViewPosts"> 
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/sss4/p/7809821.html">1. Python爬虫原理(192728)</a></li><li><a href="https://www.cnblogs.com/sss4/p/8097653.html">2. PythonWEB框架之Flask(40393)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7070942.html">3. Django之ORM操作(22908)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7071334.html">4. Django之cookie+session(13010)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7575250.html">5. Django之权限管理插件(6859)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<h3 class="catListTitle">评论排行榜</h3>
+<div class="RecentComment" id="TopCommentsPosts">
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="https://www.cnblogs.com/sss4/p/7070942.html">1. Django之ORM操作(13)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7106033.html">2. Django之中间件(10)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7809821.html">3. Python爬虫原理(7)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7686915.html">4. CURD插件（仿Django-admin版）(1)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7575250.html">5. Django之权限管理插件(1)</a></li></ul></div>
+</div></div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"><ul><li><a href="https://www.cnblogs.com/sss4/p/7809821.html">1. Python爬虫原理(12)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7070942.html">2. Django之ORM操作(9)</a></li><li><a href="https://www.cnblogs.com/sss4/p/8097653.html">3. PythonWEB框架之Flask(9)</a></li><li><a href="https://www.cnblogs.com/sss4/p/7844394.html">4. 前端框架之Vue.js(1)</a></li><li><a href="https://www.cnblogs.com/sss4/p/9771916.html">5. Python ORM框架之SQLAlchemy(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+				</div>
+			
+		</div>
+		<!-- //右侧工具部分 -->
+		<div id="footer">
+			
+<!--done-->
+Copyright ©2019 Python开发之路
+		</div>
+	</div>
+	<!-- right ends -->
+	<div class="clear"></div>
+	
+</div>
+
+
+
+
+<div id="sbi_camera_button" style="width: 29px !important; height: 27px !important; top: 3944.75px !important; left: 1074.88px !important; display: none !important;"></div></body></html>
