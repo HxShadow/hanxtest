@@ -2,6 +2,14 @@ sudo rm -f /var/run/yum.pid
 #vim
 sudo yum install vim-* -y
 
+#sudo rpm -e vim-X11-7.4.160-5.el7.x86_64 vim-enhanced-7.4.160-5.el7.x86_64 vim-filesystem-7.4.160-5.el7.x86_64 vim-minimal-7.4.160-5.el7.x86_64 vim-common-7.4.160-5.el7.x86_64 --nodeps
+rpm -qa|grep vim
+sudo rpm -e --nodeps `rpm -qa|grep vim`
+sudo rpm -Uvh http://mirror.ghettoforge.org/distributions/gf/gf-release-latest.gf.el7.noarch.rpm
+sudo rpm --import http://mirror.ghettoforge.org/distributions/gf/RPM-GPG-KEY-gf.el7
+sudo yum -y --enablerepo=gf-plus install vim-enhanced vim-X11 vim-minimal vim-common vim-filesystem
+
+
 #ssh no-password
 ssh-keygen -t rsa
 scp -P 2000 $HOME/.ssh/id_rsa.pub hanx@hep.buaa.edu.cn:.
@@ -20,9 +28,11 @@ sudo yum update
 # Chrome
 sudo yum install google-chrome-beta.x86_64 -y
 
+# Thumbnail
+sudo yum -y install ffmpegthumbnailer
+
 # ntfs-3g
-sudo yum -y install epel-release
-sudo yum -y install ntfs-3g
+sudo yum -y install epel-release ntfs-3g ntfsprogs
 grub2-mkconfig -o /boot/grub2/grub.cfg
 # add 'sudo ntfs-3g /dev/sdb3 /data' in to /etc/rc.d/rc.local
 # windows 
@@ -35,17 +45,18 @@ init 6
 # LaTeX
 sudo yum install perl-Digest-MD5 -y
 sudo yum remove texlive-* -y
-cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/LaTeX/texlive2017.iso .
-sudo mount texlive2017.iso /mnt;cd /mnt
-sudo ./install-tl
+cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/LaTeX/texlive2018.iso .
+sudo mount texlive2018.iso /mnt;cd /mnt
+sudo yum install perl-Tk -y
+sudo ./install-tl -gui
 sudo umount /mnt/
 
 # ROOT
 sudo yum install git cmake gcc-c++ gcc binutils libX11-devel libXpm-devel libXft-devel libXext-devel -y
 sudo yum install gcc-gfortran openssl-devel pcre-devel mesa-libGL-devel mesa-libGLU-devel glew-devel ftgl-devel mysql-devel fftw-devel cfitsio-devel graphviz-devel avahi-compat-libdns_sd-devel libldap-dev python-devel libxml2-devel gsl-static -y
 sudo yum install cmake3.x86_64 -y
-scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/root/root_v6.13.02.source.tar.gz .
-tar -xvf root_v6.13.02.source.tar.gz
+scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/root/root_v6.16.00.source.tar.gz .
+tar -xvf root_v6.16.00.source.tar.gz
 mkdir $HOME/root  && cd $HOME/root  
 cmake3 ../root-*  
 make -j4
@@ -54,10 +65,10 @@ echo -e "# Root \nsource /var/local/root/bin/thisroot.sh" >> $HOME/.bashrc
 
 #JAVA
 scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/java/jdk-10.0.1_linux-x64_bin.tar.gz .
-tar -xvf jdk-10.0.1_linux-x64_bin.tar.gz
-sudo mv jdk-10.0.1 /var/local
+tar -xvf jdk-12_linux-x64_bin.tar.gz
+sudo mv jdk-12 /var/local
 echo "#set Java environment
-export JAVA_HOME=/var/local/jdk-10.0.1/
+export JAVA_HOME=/var/local/jdk-12/
 export JRE_HOME=\${JAVA_HOME}/jre
 export CLASSPATH=.:\${JAVA_HOME}/lib:\${JRE_HOME}/lib
 export PATH=\${JAVA_HOME}/bin:\$PATH" >> $HOME/.bashrc
@@ -76,12 +87,12 @@ cd /usr/share/fonts/winfonts
 sudo mkfontscale
 sudo mkfontdir
 sudo fc-cache -fv
-cd;rm fonts.tar
+cd;rm fonts.tar.bz2
 
 # Mathematica
-cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/Mathematica/Mathematica.v11.2.0.Linux/Setup/Mathematica_11.2.0_LINUX.sh .
-chmod +x Mathematica_11.2.0_LINUX.sh
-sudo ./Mathematica_11.2.0_LINUX.sh
+cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/Mathematica/Mathematica.v11.2.0.Linux/Setup/Mathematica_11.3.0_LINUX.sh .
+chmod +x Mathematica_11.3.0_LINUX.sh
+sudo ./Mathematica_11.3.0_LINUX.sh
 
 # Adobe Reader
 scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/AdbeRdr9.5.5-1_i486linux_enu.rpm .
@@ -117,18 +128,35 @@ cd /usr/share/fonts/wps_symbol_fonts
 sudo mkfontscale
 sudo mkfontdir
 sudo fc-cache -fv
-cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/wps/wps-office-10.1.0.5707-1.a21.x86_64.rpm .
-sudo rpm -ivh wps-office-10.1.0.5707-1.a21.x86_64.rpm
+cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/wps/wps-office-11.1.0.8372-1.x86_64.rpm .
+sudo rpm -ivh wps-office-11.1.0.8372-1.x86_64.rpm
+cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/glibc-2.18.tar.gz .
+tar -zxvf glibc-2.18.tar.gz
+cd glibc-2.18
+mkdir build
+cd build
+../configure --prefix=/usr
+make -j4
+sudo make install
+
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/glibc-2.18/lib
+
 
 # nivda
-
-
-# ssh
-
 
 # vpn
 sudo yum install openconnect NetworkManager-openconnect -y
 #http://ccwww.kek.jp/ccsupport/network/vpn/index.html
+scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/anyconnect-linux64-4.5.02033-predeploy-k9.tar.gz .
+sudo yum install -y pangox-compat
+tar -xf anyconnect*
+rm -v anyconnect*k9.tar.gz
+cd anyconnect*/vpn
+sudo ./vpn_install.sh
+
+/opt/cisco/anyconnect/bin/vpnui
+/opt/cisco/anyconnect/bin/vpn
+
 
 # vlc
 #https://www.videolan.org/vlc/download-redhat.html
@@ -138,7 +166,7 @@ sudo yum install vlc
 #sudo yum install vlc-core (for minimal headless/server install)
 #sudo yum install python-vlc npapi-vlc (optionals)
 
-#vim
+#vim old
 #yum remove libstdc++.i686
 sudo yum install ncurses-devel.x86_64  -y
 sudo yum install libstdc++-static.x86_64 -y
@@ -147,6 +175,13 @@ sudo curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcep
 sudo yum update 
 sudo yum install vim-X11.x86_64 vim-enhanced.x86_64 
 
+#vim new make (doesn't work)
+#rpm -qa|grep vim
+sudo rpm -e vim-X11-7.4.160-5.el7.x86_64 vim-enhanced-7.4.160-5.el7.x86_64 vim-filesystem-7.4.160-5.el7.x86_64 vim-minimal-7.4.160-5.el7.x86_64 vim-common-7.4.160-5.el7.x86_64 --nodeps
+sudo yum install -y ruby ruby-devel lua lua-devel luajit luajit-devel ctags tcl-devel perl perl-devel perl-ExtUtils-ParseXS perl-ExtUtils-XSpp perl-ExtUtils-CBuilder perl-ExtUtils-Embed ncurses-devel
+./configure --with-features=huge --enable-multibyte --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib64/python2.7/config/ --enable-python3interp --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu/ --enable-perlinterp --enable-luainterp --enable-gui=gtk2 --enable-cscope --prefix=/usr
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+
 #workspace
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-2 "['<Super>2']"
@@ -154,3 +189,8 @@ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-3 "['<Super>3
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-4 "['<Super>4']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-5 "['<Super>5']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-6 "['<Super>6']"
+
+#shadowsocks
+sudo wget "https://copr.fedorainfracloud.org/coprs/librehat/shadowsocks/repo/epel-7/librehat-shadowsocks-epel-7.repo"
+sudo yum update 
+sudo yum install shadowsocks-qt5
