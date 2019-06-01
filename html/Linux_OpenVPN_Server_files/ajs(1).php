@@ -1,0 +1,3 @@
+var OX_cfc777a6 = '';
+OX_cfc777a6 += "<"+"script type=\"text/javascript\" src=\"\"><"+"/script><"+"a href=\'//gg1.51cto.com/www/delivery/ck.php?oaparams=2__bannerid=3546__zoneid=631__cb=bdd5849f1d__oadest=https%3A%2F%2Fedu.51cto.com%2Fpx%2Ftrain%2F412%3Fwzl\' target=\'_blank\'><"+"font color=\'red\'>网络安全：零基础抵抗黑客入侵<"+"/font><"+"/a><"+"div id=\'beacon_bdd5849f1d\' style=\'position: absolute; left: 0px; top: 0px; visibility: hidden;\'><"+"img src=\'//gg2.51cto.com/www/delivery/lg.php?bannerid=3546&amp;campaignid=780&amp;zoneid=631&amp;loc=1&amp;referer=file%3A%2F%2F%2Fhome%2Fhanx%2FLinux_OpenVPN_Server.html&amp;cb=bdd5849f1d\' width=\'0\' height=\'0\' alt=\'\' style=\'width: 0px; height: 0px;\' /><"+"/div>\n";
+document.write(OX_cfc777a6);

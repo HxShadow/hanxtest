@@ -1,0 +1,3 @@
+var OX_7a949b09 = '';
+OX_7a949b09 += "<"+"script type=\"text/javascript\" src=\"\"><"+"/script><"+"a href=\'//gg.51cto.com/www/delivery/ck.php?oaparams=2__bannerid=3549__zoneid=636__cb=618a3276b3__oadest=https%3A%2F%2Fedu.51cto.com%2Fpx%2Ftrain%2F130%3Fwzl\' target=\'_blank\'><"+"font color=\'red\'>HCIA|HCIP|HCIE，拿证技术双提升<"+"/font><"+"/a><"+"div id=\'beacon_618a3276b3\' style=\'position: absolute; left: 0px; top: 0px; visibility: hidden;\'><"+"img src=\'//gg1.51cto.com/www/delivery/lg.php?bannerid=3549&amp;campaignid=780&amp;zoneid=636&amp;loc=1&amp;referer=file%3A%2F%2F%2Fhome%2Fhanx%2FLinux_OpenVPN_Server.html&amp;cb=618a3276b3\' width=\'0\' height=\'0\' alt=\'\' style=\'width: 0px; height: 0px;\' /><"+"/div>\n";
+document.write(OX_7a949b09);

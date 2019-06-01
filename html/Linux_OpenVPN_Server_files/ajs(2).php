@@ -1,0 +1,3 @@
+var OX_67ccea56 = '';
+OX_67ccea56 += "<"+"script type=\"text/javascript\" src=\"\"><"+"/script><"+"a href=\'//gg2.51cto.com/www/delivery/ck.php?oaparams=2__bannerid=3717__zoneid=594__cb=201339f030__oadest=https%3A%2F%2Fedu.51cto.com%2Fpx%2Ftrain%2F438%3Fwzl\' target=\'_blank\'><"+"font color=\'red\'>OCP认证：甲骨文官方授权培训机构<"+"/font><"+"/a><"+"div id=\'beacon_201339f030\' style=\'position: absolute; left: 0px; top: 0px; visibility: hidden;\'><"+"img src=\'//gg1.51cto.com/www/delivery/lg.php?bannerid=3717&amp;campaignid=779&amp;zoneid=594&amp;loc=1&amp;referer=file%3A%2F%2F%2Fhome%2Fhanx%2FLinux_OpenVPN_Server.html&amp;cb=201339f030\' width=\'0\' height=\'0\' alt=\'\' style=\'width: 0px; height: 0px;\' /><"+"/div>\n";
+document.write(OX_67ccea56);

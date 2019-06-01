@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///home/hanx/Linux_OpenVPN_Server.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=GBK"><script async="" src="https://index.php/?do=index&amp;m=get_js_conf2&amp;artinfo_id=undefined&amp;sub_artinfo_id=undefined&amp;url=file%3A%2F%2F%2Fhome%2Fhanx%2FLinux_OpenVPN_Server.html&amp;title=%E5%9C%A8Linux%E4%B8%AD%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AEOpenVPN%20Server%E7%9A%84%E6%9C%80%E7%AE%80%E4%BE%BF%E6%96%B9%E6%B3%95%EF%BC%81&amp;jsoncallback=jQuery18307516988350979597_1559381119479&amp;_=1559381120187"></script>
+    
+    <title>在Linux中安装和配置OpenVPN Server的最简便方法！ - 51CTO.COM</title>
+    <meta name="description" content="本文介绍了如何在基于RPM和DEB的系统中安装和配置OpenVPN服务器。我们在本文中将使用一个名为openvpn-install的脚本，它使整个OpenVPN服务器的安装和配置过程实现了自动化。该脚本可帮助你在几分钟内搭建好自己的VPN服务器，哪怕你之前没有用过OpenVPN。">
+    <meta name="keywords" content="OpenVPN Server,Linux,方法">
+    <!--<base target="_blank">--><!--<base href="." target="_blank">--><base href="." target="_blank">
+    <link rel="stylesheet" type="text/css" href="file:///home/hanx/Linux_OpenVPN_Server_files/article_head.css">
+    <link rel="stylesheet" type="text/css" href="file:///home/hanx/Linux_OpenVPN_Server_files/article_layout.css">
+    <link rel="stylesheet" type="text/css" href="file:///home/hanx/Linux_OpenVPN_Server_files/article_right.css">
+    <script src="file://hm.baidu.com/hm.js?110fc9b2e1cae4d110b7959ee4f27e3b"></script><script src="file:///home/hanx/Linux_OpenVPN_Server_files/hm.js"></script><script type="text/javascript" src="file:///home/hanx/Linux_OpenVPN_Server_files/jquery.min.js"></script>
+    <style type="text/css">
+        .clearfix{*zoom:1;}
+        .clearfix:after{content:'\0020';display:block;height:0;font-size:0;line-height:0;clear:both;overflow:hidden}
+    </style>
+<script src="file:///home/hanx/Linux_OpenVPN_Server_files/share.js"></script><link rel="stylesheet" type="text/css" href="file:///home/hanx/Linux_OpenVPN_Server_files/layout_51cto.css"><link rel="stylesheet" href="file:///home/hanx/Linux_OpenVPN_Server_files/share_style0_16.css"><style type="text/css">[paradigm-48863917054] .paradigm-article-box { 
+	background-color: #FFFFFF; 
+}
+[paradigm-48863917054] .paradigm-article-fresh-btn { 
+	font-size: 12px;
+	color: #979797;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	padding: 6px 7px;
+	line-height: 1.42857143;
+	cursor: pointer; 
+}
+[paradigm-48863917054] .paradigm-box-title-bar { 
+	border: 1px solid #F5F5F5;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	height: 40px;
+	line-height: 40px; 
+}
+[paradigm-48863917054] .paradigm-article-row-dis { 
+	border-top: 1px solid #E5E9EF;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	box-sizing: border-box; 
+}
+[paradigm-48863917054] .paradigm-article-helper { 
+	line-height: 14px;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei; 
+}
+[paradigm-48863917054] .paradigm-half-margin-top { 
+	margin-top: 5px; 
+}
+[paradigm-48863917054] .paradigm-half-margin-left { 
+	margin-left: 5px; 
+}
+[paradigm-48863917054] .paradigm-article-img.paradigm-single { 
+	width: 298px;
+	height: 167.625px; 
+}
+[paradigm-48863917054] .paradigm-article-img.multi { 
+	width: 95.33333333333333px;
+	height: 53.625px;
+	margin-left: 5px; 
+}
+[paradigm-48863917054] .paradigm-article-img.multi:first-of-type { 
+	margin-left: 0; 
+}
+[paradigm-48863917054] .paradigm-article-img.left { 
+	width: 150px;
+	height: 84px; 
+}
+[paradigm-48863917054] .paradigm-article-item { 
+	width: 298px;
+	margin-right: 10px; 
+}
+[paradigm-48863917054] .paradigm-article-item:last-of-type { 
+	margin-right: 0; 
+}
+[paradigm-48863917054] .paradigm-article-title { 
+	line-height: 18px;
+	height: auto;
+	max-height: 18px;
+	font-size: 14px;
+	color: #333333;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei; 
+}
+[paradigm-48863917054] .paradigm-article-title:hover { 
+	color: #CC0000;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-48863917054] .paradigm-article-title:active { 
+	color: #000000;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-48863917054] .paradigm-article-abstract { 
+	line-height: 18px;
+	height: auto;
+	max-height: 36px;
+	font-size: 12px;
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑; 
+}
+[paradigm-48863917054] .paradigm-article-helper { 
+	line-height: 14px;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei;
+	height: 14px; 
+}
+[paradigm-48863917054] .paradigm-helper-item { 
+	margin-right: 5px; 
+}
+[paradigm-48863917054] .paradigm-helper-item:last-of-type { 
+	margin-right: 0; 
+}
+[paradigm-48863917054] .paradigm-helper-label { 
+	background-color: #D5D9DD;
+	color: #8693A3;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	padding: 4px 6px;
+	line-height: 1.42857143; 
+}
+[paradigm-48863917054] .paradigm-helper-publisher-id { 
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-48863917054] .paradigm-helper-publish-time { 
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-48863917054] .paradigm-helper-reading-count { 
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-48863917054] .paradigm-box-title { 
+	font-size: 16px;
+	color: #000000;
+	font-weight: bold;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei; 
+}
+[paradigm-48863917054] .paradigm-modifier { 
+	display: inline-block;
+	height: 100%;
+	box-sizing: border-box; 
+}
+[paradigm-48863917054] .paradigm-modifier-bottom { 
+	border-bottom: solid 2px #7F8FA4; 
+}
+[paradigm-48863917054] .paradigm-article-row-dis:last-child { 
+	display: none; 
+}
+[paradigm-48863917054] .paradigm-article-box-body { 
+	width: 300px;
+	padding-top: 10px;
+	padding-bottom: 10px; 
+}
+[paradigm-48863917054] .paradigm-box-title-bar { 
+	width: 300px; 
+}
+[paradigm-48863917054] .paradigm-right-publish-time { 
+	line-height: 14px;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei;
+	color: #9B9B9B; 
+}
+</style><style id="svelte-q07m5k-style">.paradigm-article-box.svelte-q07m5k{display:inline-block;height:auto;overflow-x:auto;overflow-y:hidden;box-sizing:border-box}.paradigm-article-box-inner.svelte-q07m5k{height:auto;box-sizing:border-box}.paradigm-box-title-bar.svelte-q07m5k{position:relative;text-align:left;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:row;justify-content:space-between;align-content:center}.paradigm-article-fresh-btn-wrapper.svelte-q07m5k{display:flex;flex-direction:column;justify-content:center}.paradigm-article-box-body.svelte-q07m5k{box-sizing:border-box}.four-paradigm-article-box a{text-decoration:none}.paradigm-clearfix:before, .paradigm-clearfix:before, .paradigm-clearfix:after{display:table;content:" "}.paradigm-clearfix:after{clear:both}.paradigm-clearfix{*zoom:1}.four-paradigm-article-box .paradigm-article-img{background-repeat:no-repeat;background-position:center center;background-size:cover;background-color:#e5e9ef;background-image:url(https://nbrecsys.4paradigm.com/resource/img/recom-render-placeholder.jpg)}.paradigm-bottom-logo-item.svelte-q07m5k{box-sizing:border-box;margin-top:15px}</style><style id="svelte-fxlrhf-style">.paradigm-article-carousel-ctr.svelte-fxlrhf{margin-top:12px;text-align:center}.paradigm-article-carousel-btn.svelte-fxlrhf{display:inline-block;box-sizing:border-box;margin:0 5px;width:10px;height:10px;position:relative;top:-5px;background-color:#e5e9ef;border-radius:50%;box-sizing:content-box;cursor:pointer;vertical-align:middle}.paradigm-article-carousel-btn.active.svelte-fxlrhf{background-color:#7f8fa4}.paradigm-layout-fixed.svelte-fxlrhf .paradigm-article-carousel-pre.svelte-fxlrhf,.paradigm-layout-fixed.svelte-fxlrhf .paradigm-article-carousel-next.svelte-fxlrhf{width:15px;height:15px;line-height:15px;display:inline-block;border-radius:3px;border:1px solid #d9d9d9;background-color:#fff;margin:0 10px;cursor:pointer}.paradigm-layout-fixed.svelte-fxlrhf .paradigm-article-carousel-pre.svelte-fxlrhf:hover,.paradigm-layout-fixed.svelte-fxlrhf .paradigm-article-carousel-next.svelte-fxlrhf:hover{border:1px solid #7f8fa4;color:#7f8fa4}.paradigm-layout-fixed.svelte-fxlrhf .paradigm-article-carousel-pre.not-click.svelte-fxlrhf,.paradigm-layout-fixed.svelte-fxlrhf .paradigm-article-carousel-next.not-click.svelte-fxlrhf{border-color:#d9d9d9;color:rgba(0,0,0,.25);cursor:not-allowed}</style><style id="svelte-1f19shf-style">.paradigm-article-row.svelte-1f19shf{box-sizing:border-box;font-size:0}</style><style id="svelte-1h8u3is-style">.paradigm-recomm-logo-wrapper.svelte-1h8u3is{display:flex;justify-content:center;align-items:center}.paradigm-recomm-loading.svelte-1h8u3is{margin-right:8px;width:14px;height:14px}.paradigm-recomm-logo.svelte-1h8u3is{display:flex;justify-content:center;align-items:center;font-size:0}.paradigm-recomm-feed-logo.svelte-1h8u3is{display:flex;justify-content:center;align-items:center;font-size:12px;font-weight:300;line-height:1;color:#000000}.paradigm-recomm-logo-right.svelte-1h8u3is{width:100%;display:flex;justify-content:flex-end}.paradigm-recomm-logo-img.svelte-1h8u3is{display:inline;width:120px;vertical-align:middle}.paradigm-recomm-logo-img.firstclick.svelte-1h8u3is{width:40px;height:16px;display:block}.paradigm-recomm-logo-tip.svelte-1h8u3is{height:16px;line-height:16px;margin-right:4px}.paradigm-rotate.svelte-1h8u3is{-webkit-transition-property:-webkit-transform;-webkit-transition-duration:1s;-moz-transition-property:-moz-transform;-moz-transition-duration:1s;-webkit-animation:svelte-1h8u3is-rotate 2s linear infinite;-moz-animation:svelte-1h8u3is-rotate 2s linear infinite;-o-animation:svelte-1h8u3is-rotate 2s linear infinite;animation:svelte-1h8u3is-rotate 2s linear infinite}@-webkit-keyframes svelte-1h8u3is-rotate{from{-webkit-transform:rotate(0deg)
+    }to{-webkit-transform:rotate(360deg)
+    }}@-moz-keyframes svelte-1h8u3is-rotate{from{-moz-transform:rotate(0deg)
+    }to{-moz-transform:rotate(359deg)
+    }}@-o-keyframes svelte-1h8u3is-rotate{from{-o-transform:rotate(0deg)
+    }to{-o-transform:rotate(359deg)
+    }}@keyframes svelte-1h8u3is-rotate{from{transform:rotate(0deg)
+    }to{transform:rotate(359deg)
+    }}</style><style id="svelte-7cx0jq-style">.paradigm-article-item.svelte-7cx0jq{float:left;display:inline-block;box-sizing:border-box;cursor:pointer}</style><style id="svelte-1711kkw-style">.paradigm-article-title.svelte-1711kkw{text-align:left;overflow:hidden}</style><style id="svelte-zimvca-style">.paradigm-article-helper.svelte-zimvca{display:flex;justify-content:flex-start;flex-wrap:wrap;color:#9b9b9b;text-align:left;overflow:hidden}.paradigm-helper-item.svelte-zimvca{max-width:100%;display:flex;flex-direction:column;justify-content:center;text-align:left}.paradigm-helper-item.placeholder.svelte-zimvca{order:2;flex-grow:10;width:0;margin:0}.paradigm-helper-content.svelte-zimvca{white-space:nowrap;box-sizing:border-box}.paradigm-helper-publisher-id.svelte-zimvca{max-width:100%;margin-right:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.paradigm-helper-label-wrapper.svelte-zimvca{margin-right:6px}.paradigm-helper-label-wrapper.svelte-zimvca:last-of-type{margin-right:0}.paradigm-helper-label.svelte-zimvca{display:inline-block;text-align:center;white-space:nowrap}.paradigm-article-ads.svelte-zimvca{float:right;width:24px;height:14px}</style><script src="./Linux_OpenVPN_Server_files/share.js"></script><link rel="stylesheet" href="./Linux_OpenVPN_Server_files/share_style0_16.css"><style type="text/css">[paradigm-84337230165] .paradigm-article-box { 
+	background-color: #FFFFFF; 
+}
+[paradigm-84337230165] .paradigm-article-fresh-btn { 
+	font-size: 12px;
+	color: #979797;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	padding: 6px 7px;
+	line-height: 1.42857143;
+	cursor: pointer; 
+}
+[paradigm-84337230165] .paradigm-box-title-bar { 
+	border: 1px solid #F5F5F5;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	height: 40px;
+	line-height: 40px; 
+}
+[paradigm-84337230165] .paradigm-article-row-dis { 
+	border-top: 1px solid #E5E9EF;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	box-sizing: border-box; 
+}
+[paradigm-84337230165] .paradigm-article-helper { 
+	line-height: 14px;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei; 
+}
+[paradigm-84337230165] .paradigm-half-margin-top { 
+	margin-top: 5px; 
+}
+[paradigm-84337230165] .paradigm-half-margin-left { 
+	margin-left: 5px; 
+}
+[paradigm-84337230165] .paradigm-article-img.paradigm-single { 
+	width: 298px;
+	height: 167.625px; 
+}
+[paradigm-84337230165] .paradigm-article-img.multi { 
+	width: 95.33333333333333px;
+	height: 53.625px;
+	margin-left: 5px; 
+}
+[paradigm-84337230165] .paradigm-article-img.multi:first-of-type { 
+	margin-left: 0; 
+}
+[paradigm-84337230165] .paradigm-article-img.left { 
+	width: 150px;
+	height: 84px; 
+}
+[paradigm-84337230165] .paradigm-article-item { 
+	width: 298px;
+	margin-right: 10px; 
+}
+[paradigm-84337230165] .paradigm-article-item:last-of-type { 
+	margin-right: 0; 
+}
+[paradigm-84337230165] .paradigm-article-title { 
+	line-height: 18px;
+	height: auto;
+	max-height: 18px;
+	font-size: 14px;
+	color: #333333;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei; 
+}
+[paradigm-84337230165] .paradigm-article-title:hover { 
+	color: #CC0000;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-84337230165] .paradigm-article-title:active { 
+	color: #000000;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-84337230165] .paradigm-article-abstract { 
+	line-height: 18px;
+	height: auto;
+	max-height: 36px;
+	font-size: 12px;
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑; 
+}
+[paradigm-84337230165] .paradigm-article-helper { 
+	line-height: 14px;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei;
+	height: 14px; 
+}
+[paradigm-84337230165] .paradigm-helper-item { 
+	margin-right: 5px; 
+}
+[paradigm-84337230165] .paradigm-helper-item:last-of-type { 
+	margin-right: 0; 
+}
+[paradigm-84337230165] .paradigm-helper-label { 
+	background-color: #D5D9DD;
+	color: #8693A3;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	padding: 4px 6px;
+	line-height: 1.42857143; 
+}
+[paradigm-84337230165] .paradigm-helper-publisher-id { 
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-84337230165] .paradigm-helper-publish-time { 
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-84337230165] .paradigm-helper-reading-count { 
+	color: #9B9B9B;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none; 
+}
+[paradigm-84337230165] .paradigm-box-title { 
+	font-size: 16px;
+	color: #000000;
+	font-weight: bold;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei; 
+}
+[paradigm-84337230165] .paradigm-modifier { 
+	display: inline-block;
+	height: 100%;
+	box-sizing: border-box; 
+}
+[paradigm-84337230165] .paradigm-modifier-bottom { 
+	border-bottom: solid 2px #7F8FA4; 
+}
+[paradigm-84337230165] .paradigm-article-row-dis:last-child { 
+	display: none; 
+}
+[paradigm-84337230165] .paradigm-article-box-body { 
+	width: 300px;
+	padding-top: 10px;
+	padding-bottom: 10px; 
+}
+[paradigm-84337230165] .paradigm-box-title-bar { 
+	width: 300px; 
+}
+[paradigm-84337230165] .paradigm-right-publish-time { 
+	line-height: 14px;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-family: 微软雅黑,Microsoft YaHei;
+	color: #9B9B9B; 
+}
+</style><link rel="stylesheet" href="./Linux_OpenVPN_Server_files/share_popup.css"></head>
+<body>
+<!--From Stor Https Trans Test-->
+<!-- 导航 开始-->
+<!-- top start -->
+<style>
+    .home-top .subweb .sub_widthAuto{width:auto;}
+    .top-nav .nav li .topnavA_zxf{width:194px;left:-60px;}
+    .top-nav .topnavA_zxf a{padding: 0 10px;}
+    .top-nav .nav li:hover .topnavA_zxf a{width:auto;text-indent:inherit;}
+    .zxf_menubot{background:#F4F4F4;padding:15px 20px 0;border-top:4px solid #be0000;font-size:14px;}
+    .zxf_menubot a{padding:0;}
+    .zxf_menubot dl{margin-right:48px;_margin-right:40px;*margin-right:40px;}
+    .zxf_menubot .nmr{margin-right:0;}
+    .zxf_menubot dt,.zxf_menubot dd{float:left;}
+    .zxf_menulist li{float:left;text-align:left;margin-right:20px;}
+    .zxf_menulist a{display:block;margin-bottom:10px;}
+    .zxf_menulist li.nmr{margin-right:0;}
+    .zxf_menu_ico{width:28px;margin-right:20px;text-align:center;color:#666;}
+    .zxf_menu_ico img{display:block;margin:10px auto 10px;}
+    .redNav{color:#be0000;}
+    .subweb-list .navcodebox{ width:410px; left:-225px; padding:20px 15px;}
+    .subweb-list .navcodebox span{ width:136px;display:inline-block; float:left; text-align:center; color:#747474; font-size:13px; }
+    .subweb-list .navcodebox span p{ padding-top: 10px;color:#333;}
+
+    .rmzw_xx li a {
+        float: left;
+        font-size: 16px;
+        height: 23px;
+        line-height: 23px;
+        overflow: hidden;
+        width: 95%;
+    }
+    .rmzw_xx li span.ico {
+        background: rgba(0, 0, 0, 0) url("https://s2.51cto.com/wyfs02/M02/98/D8/wKiom1lBBebwbP2OAAAAuOBywqs269.png") no-repeat scroll left center;
+        float: left;
+        height: 22px;
+        line-height: 22px;
+        width: 15px;
+    }
+
+    .rmzw_xx li {
+        border-bottom: 1px dotted #ccc;
+        float: left;
+        margin-top: 6px;
+        padding: 5px 0;
+        width: 100%;
+    }
+
+    .ctoll1 dd a {
+        color: #343434;
+        float: left;
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+        padding: 15px 19px 0;
+    }
+</style>
+
+<!-- top end -->
+<!-- 导航 结束-->
+
+<!-- 频道导航 -->
+
+
+<!-- 频道导航结束 -->
+
+<div class="main">
+    <!-- 左侧内容 -->
+    <div class="main_left">
+        <div class="wznr">
+            <h2>在Linux中安装和配置OpenVPN Server的最简便方法！</h2>
+            <p>本文介绍了如何在基于RPM和DEB的系统中安装和配置OpenVPN服务器。我们在本文中将使用一个名为openvpn-install的脚本，它使整个OpenVPN服务器的安装和配置过程实现了自动化。该脚本可帮助你在几分钟内搭建好自己的VPN服务器，哪怕你之前没有用过OpenVPN。</p>
+            
+        </div>
+        <div class="zwnr">
+            <!-- <h2><a href="http://mdsa.51cto.com/act/Tech/Tech24" target="_blank" style="text-decoration:none;">【51CTO技术沙龙】10月27日，让我们共同探索AI场景化应用实现之道</a></h2> -->
+            <p style="text-align: center;"><a href="file:///home/hanx/Linux_OpenVPN_Server_files/wKiom1j9aS7TzqeXAACUyTRV50k505.jpg-wh_651x-s_3857561067.jpg" target="_blank"><img src="file:///home/hanx/Linux_OpenVPN_Server_files/wKiom1j9aS7TzqeXAACUyTRV50k505.jpg-wh_651x-s_3857561067.jpg" border="0" alt="" title=""></a></p>
+<p><strong>【51CTO.com快译】</strong>本文介绍了如何在基于RPM和DEB的系统中安装和配置OpenVPN服务器。我们在本文中将使用一个名为openvpn-install的脚本，它使整个OpenVPN服务器的安装和配置过程实现了自动化。该脚本可帮助你在几分钟内搭建好自己的VPN服务器，哪怕你之前没有用过OpenVPN。</p>
+<p>好了，闲话少说。</p>
+<p><strong>在Linux中安装和配置OpenVPN Server</strong></p>
+<p>出于本文的需要，我将使用两个运行CentOS 7 64位版本的系统。一个充当OpenVPN服务器，另一个充当OpenVPN客户机。下面是测试系统的详细信息。</p>
+<ul>
+    <li>OpenVPN服务器：</li>
+    <li>操作系统：CentOS 7 64位极简版</li>
+    <li>IP地址：192.168.43.150/24</li>
+    <li>主机名称：vpnserver.ostechnix.local</li>
+    <li>OpenVPN客户机：</li>
+    <li>操作系统：CentOS 7 64位极简版</li>
+    <li>IP地址：192.168.43.199/24</li>
+</ul>
+<p>我们先来看看服务器端配置。</p>
+<p><strong>OpenVPN Server的安装和配置</strong></p>
+<p>从GitHub页面下载openvpn-install脚本。</p>
+<p>wget https://git.io/vpn -O openvpn-install.sh</p>
+<p>然后，使用下列命令，以root用户的身份运行该脚本：</p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">bash&nbsp;openvpn-install.sh&nbsp;</li></ol></pre>
+<p>系统会要求你回答一系列问题。回答相应的问题。</p>
+<p>确保VPN服务器的IP地址正确。如果你使用多个IP地址，输入想让OpenVPN侦听的那个网络接口的IP地址。</p>
+<ul>
+    <li>Welcome to this quick OpenVPN "road warrior" installer</li>
+    <li>I need to ask you a few questions before starting the setup</li>
+    <li>You can leave the default options and just press enter if you are ok with them</li>
+    <li>First I need to know the IPv4 address of the network interface you want OpenVPN</li>
+    <li>listening to.</li>
+    <li>IP address: 192.168.43.150</li>
+</ul>
+<p>选择你想使用哪种协议。我想要使用tcp端口，因此选择了数字2。</p>
+<p><strong>Which protocol do you want for OpenVPN connections?</strong></p>
+<p>1) UDP (recommended)</p>
+<p>2) TCP</p>
+<p>Protocol [1-2]: 2</p>
+<p>输入端口号。</p>
+<p>What port do you want OpenVPN listening to?</p>
+<p>Port: 1194</p>
+<p>输入你想与VPN结合使用的DNS服务器细节。我想使用谷歌DNS解析器，于是选择了选项2。</p>
+<p><strong>Which DNS do you want to use with the VPN?</strong></p>
+<p>1) Current system resolvers</p>
+<p>2) Google</p>
+<p>3) OpenDNS</p>
+<p>4) NTT</p>
+<p>5) Hurricane Electric</p>
+<p>6) Verisign</p>
+<p>DNS [1-6]: 2</p>
+<p>我们已到了最后一步。输入你的客户机证书名称。这个名称应该是一个单词，不该含有任何特殊字符。</p>
+<ul>
+    <li>Finally, tell me your name for the client certificate</li>
+    <li>Please, use one word only, no special characters</li>
+    <li>Client name: client</li>
+</ul>
+<p>按回车键，开始OpenVPN服务器的安装。</p>
+<ul>
+    <li>Okay, that was all I needed. We are ready to setup your OpenVPN server now</li>
+    <li>Press any key to continue...</li>
+</ul>
+<p>没有任何问题，该脚本会开始装上安装OpenVPN服务器需要的所有必要依赖项。另外，它还会创建所有必要的密钥和证书，以便通过VPN客户机的验证。这个过程需要几分钟。</p>
+<p>最后，脚本会问你有没有任何外部IP地址。如果没有外部IP地址，就让它空着，不用管，按回车键。</p>
+<ul>
+    <li>If your server is NATed (e.g. LowEndSpirit), I need to know the external IP</li>
+    <li>If that's not the case, just ignore this and leave the next field blank</li>
+    <li>External IP:</li>
+    <li>Finished!</li>
+    <li>Your client configuration is available at /root/client.ovpn</li>
+    <li>If you want to add more clients, you simply need to run this script again!</li>
+</ul>
+<p>OpenVPN服务器的安装和配置已完成。你从最后的输出中可以看出，客户机配置细节保存在文件/root/client.ovpn中。需要将该文件拷贝到你的所有VPN客户机系统。</p>
+<p>我将client.ovpn文件拷贝到了我的VPN客户机。</p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">scp&nbsp;client.ovpn&nbsp;root@192.168.43.199:/etc/openvpn/&nbsp;</li></ol></pre>
+<p>接下来，我们需要配置OpenVPN客户机。</p>
+<p><strong>OpenVPN客户机的配置</strong></p>
+<p>确保你从VPN服务器系统拷贝过来了client.ovpn文件。我已经将这个文件拷贝到VPN客户机系统的/etc/openvpn/目录。</p>
+<p>使用发行版软件包管理器安装OpenVPN软件包。</p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">yum&nbsp;install&nbsp;openvpn&nbsp;</li></ol></pre>
+<p>接下来，运行下列命令，与VPN服务器之间建立一条安全连接。</p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">openvpn&nbsp;<span class="comment">--config&nbsp;/etc/openvpn/client.ovpn</span>&nbsp;</li></ol></pre>
+<p>示例输出：</p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;Unrecognized&nbsp;<span class="keyword">option</span>&nbsp;<span class="op">or</span>&nbsp;missing&nbsp;parameter(s)&nbsp;<span class="op">in</span>&nbsp;/etc/openvpn/client.ovpn:14:&nbsp;block-outside-dns&nbsp;(2.3.14)&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;OpenVPN&nbsp;2.3.14&nbsp;x86_64-redhat-linux-gnu&nbsp;[SSL&nbsp;(OpenSSL)]&nbsp;[LZO]&nbsp;[EPOLL]&nbsp;[PKCS11]&nbsp;[MH]&nbsp;[IPv6]&nbsp;built&nbsp;<span class="keyword">on</span>&nbsp;<span class="keyword">Dec</span>&nbsp;7&nbsp;2016&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;library&nbsp;versions:&nbsp;OpenSSL&nbsp;1.0.1e-fips&nbsp;11&nbsp;Feb&nbsp;2013,&nbsp;LZO&nbsp;2.06&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;Control&nbsp;Channel&nbsp;Authentication:&nbsp;tls-auth&nbsp;using&nbsp;INLINE&nbsp;<span class="keyword">static</span>&nbsp;<span class="keyword">key</span>&nbsp;file&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;Outgoing&nbsp;Control&nbsp;Channel&nbsp;Authentication:&nbsp;Using&nbsp;160&nbsp;<span class="keyword">bit</span>&nbsp;message&nbsp;hash&nbsp;<span class="string">'SHA1'</span>&nbsp;<span class="keyword">for</span>&nbsp;HMAC&nbsp;authentication&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;Incoming&nbsp;Control&nbsp;Channel&nbsp;Authentication:&nbsp;Using&nbsp;160&nbsp;<span class="keyword">bit</span>&nbsp;message&nbsp;hash&nbsp;<span class="string">'SHA1'</span>&nbsp;<span class="keyword">for</span>&nbsp;HMAC&nbsp;authentication&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;Socket&nbsp;Buffers:&nbsp;R=[87380-&gt;87380]&nbsp;S=[16384-&gt;16384]&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:44&nbsp;2017&nbsp;Attempting&nbsp;<span class="keyword">to</span>&nbsp;establish&nbsp;TCP&nbsp;<span class="keyword">connection</span>&nbsp;<span class="keyword">with</span>&nbsp;[AF_INET]192.168.43.150:1194&nbsp;[nonblock]&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;TCP&nbsp;<span class="keyword">connection</span>&nbsp;established&nbsp;<span class="keyword">with</span>&nbsp;[AF_INET]192.168.43.150:1194&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;TCPv4_CLIENT&nbsp;link&nbsp;<span class="keyword">local</span>:&nbsp;[undef]&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;TCPv4_CLIENT&nbsp;link&nbsp;remote:&nbsp;[AF_INET]192.168.43.150:1194&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;TLS:&nbsp;Initial&nbsp;packet&nbsp;<span class="keyword">from</span>&nbsp;[AF_INET]192.168.43.150:1194,&nbsp;sid=c6fb554e&nbsp;362eb192&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;VERIFY&nbsp;OK:&nbsp;depth=1,&nbsp;CN=ChangeMe&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;Validating&nbsp;certificate&nbsp;<span class="keyword">key</span>&nbsp;usage&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;++&nbsp;Certificate&nbsp;has&nbsp;<span class="keyword">key</span>&nbsp;usage&nbsp;00a0,&nbsp;expects&nbsp;00a0&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;VERIFY&nbsp;KU&nbsp;OK&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;Validating&nbsp;certificate&nbsp;extended&nbsp;<span class="keyword">key</span>&nbsp;usage&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;++&nbsp;Certificate&nbsp;has&nbsp;EKU&nbsp;(str)&nbsp;TLS&nbsp;Web&nbsp;Server&nbsp;Authentication,&nbsp;expects&nbsp;TLS&nbsp;Web&nbsp;Server&nbsp;Authentication&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;VERIFY&nbsp;EKU&nbsp;OK&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;VERIFY&nbsp;OK:&nbsp;depth=0,&nbsp;CN=server&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;Data&nbsp;Channel&nbsp;Encrypt:&nbsp;Cipher&nbsp;<span class="string">'AES-256-CBC'</span>&nbsp;initialized&nbsp;<span class="keyword">with</span>&nbsp;256&nbsp;<span class="keyword">bit</span>&nbsp;<span class="keyword">key</span>&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;Data&nbsp;Channel&nbsp;Encrypt:&nbsp;Using&nbsp;160&nbsp;<span class="keyword">bit</span>&nbsp;message&nbsp;hash&nbsp;<span class="string">'SHA1'</span>&nbsp;<span class="keyword">for</span>&nbsp;HMAC&nbsp;authentication&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;Data&nbsp;Channel&nbsp;Decrypt:&nbsp;Cipher&nbsp;<span class="string">'AES-256-CBC'</span>&nbsp;initialized&nbsp;<span class="keyword">with</span>&nbsp;256&nbsp;<span class="keyword">bit</span>&nbsp;<span class="keyword">key</span>&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;Data&nbsp;Channel&nbsp;Decrypt:&nbsp;Using&nbsp;160&nbsp;<span class="keyword">bit</span>&nbsp;message&nbsp;hash&nbsp;<span class="string">'SHA1'</span>&nbsp;<span class="keyword">for</span>&nbsp;HMAC&nbsp;authentication&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;Control&nbsp;Channel:&nbsp;TLSv1.2,&nbsp;cipher&nbsp;TLSv1/SSLv3&nbsp;DHE-RSA-AES256-GCM-SHA384,&nbsp;2048&nbsp;<span class="keyword">bit</span>&nbsp;RSA&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:45&nbsp;2017&nbsp;[server]&nbsp;Peer&nbsp;<span class="keyword">Connection</span>&nbsp;Initiated&nbsp;<span class="keyword">with</span>&nbsp;[AF_INET]192.168.43.150:1194&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;SENT&nbsp;CONTROL&nbsp;[server]:&nbsp;<span class="string">'PUSH_REQUEST'</span>&nbsp;(status=1)&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;PUSH:&nbsp;Received&nbsp;control&nbsp;message:&nbsp;<span class="string">'PUSH_REPLY,redirect-gateway&nbsp;def1&nbsp;bypass-dhcp,dhcp-option&nbsp;DNS&nbsp;8.8.8.8,dhcp-option&nbsp;DNS&nbsp;8.8.4.4,route-gateway&nbsp;10.8.0.1,topology&nbsp;subnet,ping&nbsp;10,ping-restart&nbsp;120,ifconfig&nbsp;10.8.0.2&nbsp;255.255.255.0'</span>&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;OPTIONS&nbsp;IMPORT:&nbsp;timers&nbsp;<span class="op">and</span>/<span class="op">or</span>&nbsp;timeouts&nbsp;modified&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;OPTIONS&nbsp;IMPORT:&nbsp;<span class="comment">--ifconfig/up&nbsp;options&nbsp;modified</span>&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;OPTIONS&nbsp;IMPORT:&nbsp;route&nbsp;options&nbsp;modified&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;OPTIONS&nbsp;IMPORT:&nbsp;route-related&nbsp;options&nbsp;modified&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;OPTIONS&nbsp;IMPORT:&nbsp;<span class="comment">--ip-win32&nbsp;and/or&nbsp;--dhcp-option&nbsp;options&nbsp;modified</span>&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;ROUTE_GATEWAY&nbsp;192.168.43.1/255.255.255.0&nbsp;IFACE=enp0s3&nbsp;HWADDR=08:00:27:28:98:6b&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;TUN/TAP&nbsp;device&nbsp;tun0&nbsp;opened&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;TUN/TAP&nbsp;TX&nbsp;queue&nbsp;length&nbsp;<span class="keyword">set</span>&nbsp;<span class="keyword">to</span>&nbsp;100&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;do_ifconfig,&nbsp;tt-&gt;ipv6=0,&nbsp;tt-&gt;did_ifconfig_ipv6_setup=0&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;/usr/sbin/ip&nbsp;link&nbsp;<span class="keyword">set</span>&nbsp;dev&nbsp;tun0&nbsp;up&nbsp;mtu&nbsp;1500&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;/usr/sbin/ip&nbsp;addr&nbsp;<span class="keyword">add</span>&nbsp;dev&nbsp;tun0&nbsp;10.8.0.2/24&nbsp;broadcast&nbsp;10.8.0.255&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;/usr/sbin/ip&nbsp;route&nbsp;<span class="keyword">add</span>&nbsp;192.168.43.150/32&nbsp;dev&nbsp;enp0s3&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;/usr/sbin/ip&nbsp;route&nbsp;<span class="keyword">add</span>&nbsp;0.0.0.0/1&nbsp;via&nbsp;10.8.0.1&nbsp;</li><li>Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;/usr/sbin/ip&nbsp;route&nbsp;<span class="keyword">add</span>&nbsp;128.0.0.0/1&nbsp;via&nbsp;10.8.0.1&nbsp;</li><li class="alt">Wed&nbsp;Apr&nbsp;5&nbsp;18:50:48&nbsp;2017&nbsp;Initialization&nbsp;<span class="keyword">Sequence</span>&nbsp;Completed&nbsp;</li></ol></pre>
+<p>现在，检查一下tun0(VPN接口)是否已创建，并使用‘ip addr’命令，检查VPN接口的IP地址。</p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">ip&nbsp;addr&nbsp;</li></ol></pre>
+<p><strong>示例输出：</strong></p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">1:&nbsp;lo:&nbsp;&lt;LOOPBACK,UP,LOWER_UP&gt;&nbsp;mtu&nbsp;65536&nbsp;qdisc&nbsp;noqueue&nbsp;state&nbsp;UNKNOWN&nbsp;&nbsp;</li><li>&nbsp;link/loopback&nbsp;00:00:00:00:00:00&nbsp;brd&nbsp;00:00:00:00:00:00&nbsp;</li><li class="alt">&nbsp;inet&nbsp;127.0.0.1/8&nbsp;scope&nbsp;host&nbsp;lo&nbsp;</li><li>&nbsp;valid_lft&nbsp;forever&nbsp;preferred_lft&nbsp;forever&nbsp;</li><li class="alt">&nbsp;inet6&nbsp;::1/128&nbsp;scope&nbsp;host&nbsp;&nbsp;</li><li>&nbsp;valid_lft&nbsp;forever&nbsp;preferred_lft&nbsp;forever&nbsp;</li><li class="alt">2:&nbsp;enp0s3:&nbsp;&lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;&nbsp;mtu&nbsp;1500&nbsp;qdisc&nbsp;pfifo_fast&nbsp;state&nbsp;UP&nbsp;qlen&nbsp;1000&nbsp;</li><li>&nbsp;link/ether&nbsp;08:00:27:28:98:6b&nbsp;brd&nbsp;ff:ff:ff:ff:ff:ff&nbsp;</li><li class="alt">&nbsp;inet&nbsp;192.168.43.199/24&nbsp;brd&nbsp;192.168.43.255&nbsp;scope&nbsp;<span class="keyword">global</span>&nbsp;<span class="keyword">dynamic</span>&nbsp;enp0s3&nbsp;</li><li>&nbsp;valid_lft&nbsp;42359sec&nbsp;preferred_lft&nbsp;42359sec&nbsp;</li><li class="alt">&nbsp;inet6&nbsp;fe80::a00:27ff:fe28:986b/64&nbsp;scope&nbsp;link&nbsp;&nbsp;</li><li>&nbsp;valid_lft&nbsp;forever&nbsp;preferred_lft&nbsp;forever&nbsp;</li><li class="alt">3:&nbsp;tun0:&nbsp;&lt;POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP&gt;&nbsp;mtu&nbsp;1500&nbsp;qdisc&nbsp;pfifo_fast&nbsp;state&nbsp;UNKNOWN&nbsp;qlen&nbsp;100&nbsp;</li><li>&nbsp;link/none&nbsp;&nbsp;</li><li class="alt">&nbsp;inet&nbsp;10.8.0.2/24&nbsp;brd&nbsp;10.8.0.255&nbsp;scope&nbsp;<span class="keyword">global</span>&nbsp;tun0&nbsp;</li><li>&nbsp;valid_lft&nbsp;forever&nbsp;preferred_lft&nbsp;forever&nbsp;</li></ol></pre>
+<p>你可以从上述输出中看出，我们的VPN服务器自动将IP地址10.8.0.2分配给了VPN客户机。</p>
+<p>现在试着从VPN客户机系统ping该VPN服务器：</p>
+<p>ping -c3 10.8.0.1</p>
+<p><strong>示例输出：</strong></p>
+<pre style="width: 1137.5px;"><ol class="dp-sql"><li class="alt">PING&nbsp;10.8.0.1&nbsp;(10.8.0.1)&nbsp;56(84)&nbsp;bytes&nbsp;<span class="keyword">of</span>&nbsp;data.&nbsp;</li><li>64&nbsp;bytes&nbsp;<span class="keyword">from</span>&nbsp;10.8.0.1:&nbsp;icmp_seq=1&nbsp;ttl=64&nbsp;<span class="keyword">time</span>=1.05&nbsp;ms&nbsp;</li><li class="alt">64&nbsp;bytes&nbsp;<span class="keyword">from</span>&nbsp;10.8.0.1:&nbsp;icmp_seq=2&nbsp;ttl=64&nbsp;<span class="keyword">time</span>=1.94&nbsp;ms&nbsp;</li><li>64&nbsp;bytes&nbsp;<span class="keyword">from</span>&nbsp;10.8.0.1:&nbsp;icmp_seq=3&nbsp;ttl=64&nbsp;<span class="keyword">time</span>=2.49&nbsp;ms&nbsp;</li><li class="alt"><span class="comment">---&nbsp;10.8.0.1&nbsp;ping&nbsp;statistics&nbsp;---</span>&nbsp;</li><li>3&nbsp;packets&nbsp;transmitted,&nbsp;3&nbsp;received,&nbsp;0%&nbsp;packet&nbsp;loss,&nbsp;<span class="keyword">time</span>&nbsp;2001ms&nbsp;</li><li class="alt">rtt&nbsp;<span class="keyword">min</span>/<span class="func">avg</span>/<span class="keyword">max</span>/mdev&nbsp;=&nbsp;1.057/1.832/2.495/0.594&nbsp;ms&nbsp;</li></ol></pre>
+<p>恭喜!我们现在已在CentOS中成功地安装和配置了OpenVPN服务器和客户机。这个方法对基于DEB的系统(比如Ubuntu和Linux Mint)来说一样。不像手动安装，该脚本让OpenVPN的安装和配置容易了许多。</p>
+<p><span style="color: rgb(0, 0, 255);">原文标题：An Easiest Way To Install And Configure OpenVPN Server In  Linux，作者：SK</span></p>
+<br>
+            
+        </div>
+        
+        <div class="nrdp comment">
+            <script>
+	$(function(){
+		var host = window.location.host;
+		var domain_prefix = host.replace(/\.51cto\.com/, '');
+		function appendRecommend(){
+			$(".share5").prepend("<div id='c21148bdd1e7483e87966a00982902d4'></div>");
+		}
+		if(domain_prefix == 'developer') {
+			appendRecommend();
+			ParadigmSDKv3.init("dcde33d0dc6845609e9cb47f754d1094");
+			ParadigmSDKv3.renderArticle('c21148bdd1e7483e87966a00982902d4',346,605);
+		}
+	})
+</script>
+<div class="comment center">
+	
+</div>
+<script type="text/javascript" id="UYScript" src="file:///home/hanx/Linux_OpenVPN_Server_files/iframe_cmt.js" async=""></script>
+
+        </div>
+        
+    </div>
+    <!-- 文章左侧结束 -->
+    
+    
+    
+    </div>
+
+
+
+<script>
+    $('.zwnr img').each(function(i,e){if($(e)[0].clientWidth > 651) {$(e).css("width", "650px")}})
+    $(function(){
+        var host = window.location.host;
+        document.getElementById('cnxh').style.display = '';
+    });
+    var $$ = function(func){
+        if (document.addEventListener) {
+            window.addEventListener("load", func, false);
+        }
+        else if (document.attachEvent) {
+            window.attachEvent("onload", func);
+        }
+    };
+
+    $$(function(){
+        show();
+    });
+    var show = function(){
+        var aa = $('#cmscmt_iframe dl').html();
+        setTimeout(function(){
+            $("[data-track]").live("click", function() {
+                if (aa.indexOf('uid') > -1) {
+                    var label = $(this).data("track") + '-login';
+                } else {
+                    var label = $(this).data("track") + '-not-login';
+                }console.log(label);
+                window._hmt && window._hmt.push(['_trackEvent', label, 'click']);
+
+            });
+        }, 3000);
+    }
+
+</script>
+<script src="file:///home/hanx/Linux_OpenVPN_Server_files/count.js"></script><script src="./Linux_OpenVPN_Server_files/count.php"></script><script src="file:///home/hanx/Linux_OpenVPN_Server_files/count.php"></script>
+
+
+
+
+    
+        
+        
+    
+
+<style type="text/css">
+    #edu_adver{position:fixed; top:240px; left:50%; margin-left:-623px; width:100px; height:300px; border:1px solid #c4c4c6;}
+    #edu_adver .aderbox{position:relative;}
+    #edu_adver  .educlose{position:absolute; right:6px; top:6px; background:#655c4d; color:#fff; font-size:12px;  display:inline-block; width:13px; height:13px; text-align:center; line-height:13px; cursor:pointer;}
+</style>
+<script>
+    $('#edu_adver .educlose').click(function () {
+        $("#edu_adver").hide();
+    });
+    var s=window.location.toString();
+    var s1=s.substr(7,s.length);
+    var s2=s1.indexOf(".");
+    s=s.substr(7,s2);
+    if(s=="stor"||s=="server"||s=="network"||s=="virtual"){
+        $("#edu_adver").hide();
+    }
+    if (s=="stor"||s=="server"||s=="network"||s=="virtual") {
+        $('.aderbox').find('a')[0].href = '';
+        $('.aderbox').find('img')[0].src = 'https://s2.51cto.com/oss/201711/01/507eecf589ca025c76a3aff2dfc1fcc4.jpg';
+    }
+</script>
+
+<!--数据统计-->
+<script>
+    //ParadigmSDKv3.init("dcde33d0dc6845609e9cb47f754d1094");
+    $(function(){
+        if(domain_prefix == 'developer') {
+            ParadigmSDKv3.trackDetailPageShow(346);
+        }else{
+            ParadigmSDKv3.trackDetailPageShow(269);
+        }
+    })
+</script>
+<script>
+    var host = window.location.host;
+    var domain_prefix = host.replace(/\.51cto\.com/, '');
+    var nowTime = new Date().getTime();
+    //get start time and end
+    var startTime1 = 0;
+    var endTime1 = 0;
+    var startTime2 = 0;
+    var endTime2 = 0;
+    var startTime3 = 0;
+    var endTime3 = 0;
+    var startTime4 = 0;
+    var endTime4 = 0;
+    var startTime5 = 0;
+    var endTime5 = 0;
+    var adContent = '';
+    if(domain_prefix == 'cloud'){
+        startTime1 = new Date('2018/08/31 00:00:00').getTime();
+        endTime1 = new Date('2018/08/31 23:59:59').getTime();
+
+        startTime2 = new Date('2018/09/05 00:00:00').getTime();
+        endTime2 = new Date('2018/09/07 23:59:59').getTime();
+
+        startTime3 = new Date('2018/09/12 00:00:00').getTime();
+        endTime3 = new Date('2018/09/13 23:59:59').getTime();
+
+        startTime4 = new Date('2018/09/19 00:00:00').getTime();
+        endTime4 = new Date('2018/09/20 23:59:59').getTime();
+
+        startTime5 = new Date('2018/09/25 00:00:00').getTime();
+        endTime5 = new Date('2018/09/26 23:59:59').getTime();
+        if((nowTime > startTime1 && nowTime < endTime1) || (nowTime > startTime2 && nowTime < endTime2) || (nowTime > startTime3 && nowTime < endTime3) || (nowTime > startTime4 && nowTime < endTime4) || (nowTime > startTime5 && nowTime < endTime5)){
+            adContent = "<iframe src=\"http://cloud.51cto.com/act/IBM/201808ad\" frameborder=\"0\" width=\"300px\" height=\"250px\" scrolling=\"no\"></iframe>";
+            changeAd();
+        }
+    }else if(domain_prefix == 'bigdata'){
+        startTime1 = new Date('2018/08/31 00:00:00').getTime();
+        endTime1 = new Date('2018/08/31 23:59:59').getTime();
+
+        startTime2 = new Date('2018/09/04 00:00:00').getTime();
+        endTime2 = new Date('2018/09/04 23:59:59').getTime();
+
+        startTime3 = new Date('2018/09/10 00:00:00').getTime();
+        endTime3 = new Date('2018/09/10 23:59:59').getTime();
+
+        startTime4 = new Date('2018/09/17 00:00:00').getTime();
+        endTime4 = new Date('2018/09/17 23:59:59').getTime();
+
+        startTime5 = new Date('2018/09/27 00:00:00').getTime();
+        endTime5 = new Date('2018/09/27 23:59:59').getTime();
+        if((nowTime > startTime1 && nowTime < endTime1) || (nowTime > startTime2 && nowTime < endTime2) || (nowTime > startTime3 && nowTime < endTime3) || (nowTime > startTime4 && nowTime < endTime4) || (nowTime > startTime5 && nowTime < endTime5)){
+            adContent = "<iframe src=\"http://cloud.51cto.com/act/IBM/201808ad2\" frameborder=\"0\" width=\"300px\" height=\"250px\" scrolling=\"no\"></iframe>";
+            changeAd();
+        }
+    }
+    function changeAd(){
+        //add new
+        $("div.mtgg").after(adContent);
+        //move some block to left
+        var adBox = $("div.mtgg");
+        $(".zwnr p:first").before(adBox);
+        $("div.mtgg").css('margin-top', '7px');
+        $("div.mtgg").css('margin-right', '10px');
+
+    }
+</script>
+
+<script type="text/javascript">var artid = 537925</script>
+<script src="file:///home/hanx/Linux_OpenVPN_Server_files/index.php" charset="utf-8"></script><script src="./Linux_OpenVPN_Server_files/vip_top.js"></script><script src="file:///home/hanx/Linux_OpenVPN_Server_files/vip_top.js"></script>
+<script type="text/javascript" src="file:///home/hanx/Linux_OpenVPN_Server_files/article.js"></script>
+<script type="text/javascript" src="file:///home/hanx/Linux_OpenVPN_Server_files/article_ajax.js"></script>
+<script src="file:///home/hanx/Linux_OpenVPN_Server_files/count(1).php" type="text/javascript"></script>
+<script type="text/javascript" src="file:///home/hanx/Linux_OpenVPN_Server_files/favorbox.js"></script>
+<!--  一大波JS来袭 -->
+<div id="MyMoveAd" style="display:none">
+    <span id="pinglun"><script type="text/javascript" src="file:///home/hanx/Linux_OpenVPN_Server_files/getArtCount.php"></script>00</span>
+	<span id="tonglan"><script type="text/javascript" src="file:///home/hanx/Linux_OpenVPN_Server_files/ad.js"></script><script type="text/javascript" src="./Linux_OpenVPN_Server_files/ad.php"></script></span>
+	<span id="wordlink_1"><script src="file:///home/hanx/Linux_OpenVPN_Server_files/wordlink1.js"></script><script type="text/javascript" src="./Linux_OpenVPN_Server_files/ajs.php"></script></span>
+	<span id="wordlink_2"><script src="file:///home/hanx/Linux_OpenVPN_Server_files/wordlink2.js"></script><script type="text/javascript" src="./Linux_OpenVPN_Server_files/ajs(1).php"></script></span>
+	<span id="wordlink_3"><script src="file:///home/hanx/Linux_OpenVPN_Server_files/wordlink3.js"></script><script type="text/javascript" src="./Linux_OpenVPN_Server_files/ajs(2).php"></script></span>
+	<span id="wordlink_4"><script src="file:///home/hanx/Linux_OpenVPN_Server_files/wordlink4.js"></script><script type="text/javascript" src="./Linux_OpenVPN_Server_files/ajs(3).php"></script></span>
+	<span id="wordlink"><script src="file:///home/hanx/Linux_OpenVPN_Server_files/ad(2).js"></script></span>
+</div>
+<script type="text/javascript">
+var thistid=537925;
+//收藏按钮
+var favor_url = 'http://netsecurity.51cto.com/art/201704/537925.htm';
+var favor_title = '在Linux中安装和配置OpenVPN Server的最简便方法！';  
+document.getElementById('tonglanad').innerHTML=document.getElementById('tonglan').innerHTML;
+</script>
+<!-- 结束 -->
+
+
+<iframe id="cros_iframe" src="./Linux_OpenVPN_Server_files/cross-store-server.html" style="width: 1px; height: 1px; border: 0px; position: absolute; left: -9999px; top: -9999px;"></iframe><div id="sbi_camera_button" style="width: 29px !important; height: 27px !important; top: 713px !important; left: 769.5px !important; display: none !important;"></div>
+<iframe id="cros_iframe" src="./Linux_OpenVPN_Server_files/cross-store-server(1).html" style="width: 1px; height: 1px; border: 0px; position: absolute; left: -9999px; top: -9999px;"></iframe><iframe frameborder="0" id="bdSharePopup_1559381354426bg" class="bdshare_popup_bg" style="height: 326px; width: 228px; top: 448px; left: 615.891px; display: none;" src="./Linux_OpenVPN_Server_files/saved_resource.html"></iframe><div class="bdshare_popup_box" id="bdSharePopup_1559381354426box" style="width: 226px; top: 448px; left: 615.891px; display: none;"><div class="bdshare_popup_top">分享到</div><ul class="bdshare_popup_list"><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_mshare" data-cmd="mshare">一键分享</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_qzone" data-cmd="qzone">QQ空间</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_tsina" data-cmd="tsina">新浪微博</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_bdysc" data-cmd="bdysc">百度云收藏</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_weixin" data-cmd="weixin">微信</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_renren" data-cmd="renren">人人网</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_tqq" data-cmd="tqq">腾讯微博</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_bdxc" data-cmd="bdxc">百度相册</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_kaixin001" data-cmd="kaixin001">开心网</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_tqf" data-cmd="tqf">腾讯朋友</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_tieba" data-cmd="tieba">百度贴吧</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_douban" data-cmd="douban">豆瓣网</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_bdhome" data-cmd="bdhome">百度新首页</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_sqq" data-cmd="sqq">QQ好友</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_thx" data-cmd="thx">和讯微博</a></li><li><a href="file:///home/hanx/#" onclick="return false;" class="popup_ibaidu" data-cmd="ibaidu">百度中心</a></li></ul><div class="bdshare_popup_bottom"><a href="file:///home/hanx/#" onclick="return false;" class="popup_more" data-cmd="more" target="_blank;">更多...</a></div></div></body></html>
