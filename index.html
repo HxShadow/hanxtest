@@ -6,25 +6,27 @@
       font-family: Arial, sans-serif;
     }
   </style>
-<meta charset="UTF-8">
-<title>X. Han's Web</title>
-<base target="_blank">
-<base style="margin-left:20px;">
-<style type="text/css">
-body {background-color:#FFFFFF}
-</style>
+  <meta charset="UTF-8">
+  <title>X. Han's Web</title>
+  <base target="_blank">
+  <base style="margin-left:20px;">
+  <style type="text/css">
+  body {background-color:#FFFFFF}
+  </style>
 </head>
+
 <body>
-<div style="font-family:verdana;padding:20px;background-color:#ffffff">
+<div style="font-family:verdana;padding:10px;background-color:#ffffff">
 	<h1 style="text-align:center;">X. Han's Web</h1>
 </div>
 <div id="menu" style="background-color:#FFFFFF;height:200px;width:100px;float:left;">
 </div>
 
 <div id="content" style="background-color:#FFFFFF;height:2400px;width:1200px;float:left;">
-<hr/>
 
-<li><a href="html/learn.htm">Learn HTML</a></li>
+<hr/>
+<h3>Bakcup</h3>
+<li> <a href="html/learn.htm">Learn HTML</a></li>
 <li> <a href="files/Scientific.Linux.txt">Scientific.Linux.sh</a></li>
 <li> <a href="html/Github.html">git</a></li>
 <li> <a href="files/shadowsocks.txt">Shadowsocks</a></li>
@@ -45,8 +47,30 @@ body {background-color:#FFFFFF}
   <div id="output"></div>
   </li>
 
+<hr/>
+<h3> My github</h3>
 
-  <script>    
+<table>
+
+<tr>
+	<td><li></li></td> <td><a href="https://github.com/hanx-phy/.bin">.bin</a></td><td> https://github.com/hanx-phy/.bin.git</td>
+</tr>
+
+<tr>
+	<td><li></li></td> <td><a href="https://github.com/hanx-phy/.vim">.vim</a></td><td> https://github.com/hanx-phy/.vim.git</td>
+</tr>
+
+<tr>
+	<td><li></li></td> <td><a href="https://github.com/hanx-phy/hanxweb">hanxweb</a></td><td> https://github.com/hanx-phy/hanxweb.git</td>
+</tr>
+
+
+<tr>
+	<td><li></li></td> <td><a href="https://github.com/hanx-phy/sshjump">sshjump</a></td><td> https://github.com/hanx-phy/sshjump.git</td>
+</tr>
+</table>
+
+  <script>    <!--{{{-->
     function f1(n, byte, c) { // inverse of f2: f1(f2(x, y, c), c, y, c) == x
       for (var bitIndex = 0; bitIndex <= 7; bitIndex++) {
         var bit = (byte >> bitIndex) & 1;
@@ -111,14 +135,14 @@ body {background-color:#FFFFFF}
       return password;
     }
     
-    function genFromMathId(hashs) {
-      document.getElementById("output").innerHTML = "";
+    function genFromMathId(hashs) {<!--{{{-->
+      document.getElementById("output").innerHTML = "";<!--}}}-->
       var mathId = document.getElementById("str").value;
       var activationKey = "1234-4321-123456";
       var password = genPassword(mathId + "$1&" + activationKey,hashs);
       document.getElementById("output").innerHTML += password + "</br>";
     }
-  </script>
+  </script><!--}}}-->
 
 </head>
 
