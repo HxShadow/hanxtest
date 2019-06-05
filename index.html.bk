@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <style type="text/css">
@@ -11,41 +10,6 @@
 <base target="_blank">
 <base style="margin-left:20px;">
 <style type="text/css">
-body {background-color:#FFFFFF}
-</style>
-</head>
-<body>
-<div style="font-family:verdana;padding:20px;background-color:#ffffff">
-	<h1 style="text-align:center;">X. Han's Web</h1>
-</div>
-<div id="menu" style="background-color:#FFFFFF;height:200px;width:100px;float:left;">
-</div>
-
-<div id="content" style="background-color:#FFFFFF;height:2400px;width:1200px;float:left;">
-<hr/>
-
-<li><a href="html/learn.htm">Learn HTML</a></li>
-<li> <a href="files/Scientific.Linux.txt">Scientific.Linux.sh</a></li>
-<li> <a href="html/Github.html">git</a></li>
-<li> <a href="files/shadowsocks.txt">Shadowsocks</a></li>
-<li> <a href="html/CentOS_SSServer.html">CentOS SSServer</a></li>
-<li> <a href="html/Linux_OpenVPN_Server.html">Centos OpenVPN Server</a></li>
-<li> <a href="https://hxshadow.github.io/motorcycle/">Motorcycle</a></li>
-<li> <a href="html/Python.html">Python 爬虫</a></li>
-<li> <a href="html/Vim_Latex.html">Vim LaTeX</a></li>
-<li> <a href="html/dd_make_ISO_USB.html">在linux 系统中使用 dd 制作u盘iso镜像</a></li>
-<li> <a href="https://blog.csdn.net/mingyong_blog/article/details/50995622">Encode: iconv -f gbk -tutf8 .txt > .txt.utf8</a></li>
-  <br/>
-<li>
-  <input type="text" id="str"/>
-  <button onclick="genFromMathId(0xA439)" style="color:#ffffff"> MathID </button>
-  <button onclick="genFromMathId(0x6A91)" style="color:#ffffff"> Old </button>
-  <br/>
-  <br/>
-  <div id="output"></div>
-  </li>
-
-
   <script>    
     function f1(n, byte, c) { // inverse of f2: f1(f2(x, y, c), c, y, c) == x
       for (var bitIndex = 0; bitIndex <= 7; bitIndex++) {
@@ -119,7 +83,33 @@ body {background-color:#FFFFFF}
       document.getElementById("output").innerHTML += password + "</br>";
     }
   </script>
-
 </head>
 
+<body>
+<div style="font-family:verdana;padding:20px;border-radius:10px;border:10px solid #EE872A;background-color:#ffffff">
+	<h1 style="text-align:center;">learn HTML</h1>
+</div>
+
+<li><a href="html/learn.htm">Learn HTML</a></li>
+<li> <a href="files/Scientific.Linux.txt">Scientific.Linux.sh</a></li>
+<li> <a href="html/Github.html">git</a></li>
+<li> <a href="files/shadowsocks.txt">Shadowsocks</a></li>
+<li> <a href="html/CentOS_SSServer.html">CentOS SSServer</a></li>
+<li> <a href="html/Linux_OpenVPN_Server.html">Centos OpenVPN Server</a></li>
+<li> <a href="https://hxshadow.github.io/motorcycle/">Motorcycle</a></li>
+<li> <a href="html/Python.html">Python 爬虫</a></li>
+<li> <a href="html/Vim_Latex.html">Vim LaTeX</a></li>
+<li> <a href="html/dd_make_ISO_USB.html">在linux 系统中使用 dd 制作u盘iso镜像</a></li>
+<li> <a href="https://blog.csdn.net/mingyong_blog/article/details/50995622">Encode: iconv -f gbk -tutf8 .txt > .txt.utf8</a></li>
+  <br/>
+<li>
+  <input type="text" id="str"/>
+  <button onclick="genFromMathId(0xA439)" style="color:#ffffff"> MathID </button>
+  <button onclick="genFromMathId(0x6A91)" style="color:#ffffff"> Old </button>
+  <br/>
+  <br/>
+  <div id="output"></div>
+  </li>
+
+</body>
 </html>
