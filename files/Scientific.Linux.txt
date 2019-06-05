@@ -22,6 +22,8 @@ scp -P 2000 hanx@hep.buaa.edu.cn:share/install/repo.tar $HOME
 tar -xvf repo.tar;cd repo;sudo mv * /etc/yum.repos.d/
 cd /etc/pki/rpm-gpg
 sudo wget https://archive.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+sudo yum install yum-axelget 
+sudo yum clean all && sudo yum makecache && sudo yum -y update
 sudo yum upgrade
 sudo yum update 
 
@@ -195,7 +197,7 @@ sudo wget "https://copr.fedorainfracloud.org/coprs/librehat/shadowsocks/repo/epe
 sudo yum update 
 sudo yum install shadowsocks-qt5
 
-# IamageMagick
+# ImageMagick
 sudo yum install gcc php-devel php-pear
 sudo yum install libde265
 sudo yum -y install bzip2-devel freetype-devel libjpeg-devel libpng-devel libtiff-devel giflib-devel zlib-devel ghostscript-devel djvulibre-devel libwmf-devel jasper-devel libtool-ltdl-devel libX11-devel libXext-devel libXt-devel lcms-devel libxml2-devel librsvg2-devel OpenEXR-devel php-devel LibRaw LibRaw-devel libheif libheif-devel
@@ -209,3 +211,25 @@ sudo make install
 # evolution
 sudo yum install evolution-ews
 scp -P 2000 hep.buaa.edu.cn:share/install/software/evolution-backup-20190419.tar.gz $HOME
+
+# nautilus
+vim ~/.local/share/nautilus/scripts/Terminal
+# !/bin/sh
+gnome-terminal
+
+chmod +x ~/.local/share/nautilus/scripts/Terminal
+nautilus -q
+
+vim ~/.config/nautilus/scripts-accels
+F4 Terminal
+; Commented lines must have a space after the semicolon
+; Examples of other key combinations:
+; <Control>F12 Terminal
+; <Alt>F12 Terminal
+; <Shift>F12 Terminal
+
+# ibus-libpinyin?
+git clone https://github.com/libpinyin/ibus-libpinyin.git
+sudo yum install gnome-common ibus-devel sqlite-devel libpinyin-devel gettext-devel intltool libtool pkgconfig libuuid-devel opencc-devel lua-devel 
+cd #blabla
+./autogen.sh
