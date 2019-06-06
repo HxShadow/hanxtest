@@ -1,0 +1,8 @@
+系统顺序：
+/etc/grub.d/
+
+背景图：
+/etc/grub.d/05_debian_theme
+
+选项：
+/etc/default/grub

@@ -1,0 +1,11 @@
+无导航栏： default、 boxes、 Bergen、 Pittsburgh 和 Rochester。
+
+带顶栏： Antibes、 Darmstadt、 Frankfurt、 JuanLesPins、 Montpellier 和
+Singapore。
+
+带底栏： Boadilla 和 Madrid。
+
+带顶栏和底栏： AnnArbor、 Berlin、 CambridgeUS、 Copenhagen、 Dresden、
+Ilmenau、 Luebeck、 Malmoe、 Szeged 和 Warsaw。
+
+带侧栏： Berkeley、 Goettingen、 Hannover、 Marburg 和 PaloAlto。

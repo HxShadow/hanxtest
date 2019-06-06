@@ -1,0 +1,10 @@
+make sure your env. is texlive
+
+sudo vi /usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
+
+\PassOptionsToPackage{bookmarks=true,%
+  bookmarksopen=true,%
+  pdfborder={0 0 0},%
+  pdfhighlight={/N},%
+  unicode=true,%       <-------------- append this line
+  linkbordercolor={.5 .5 .5}}{hyperref}

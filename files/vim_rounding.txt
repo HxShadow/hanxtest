@@ -1,0 +1,43 @@
+rounding the data in vim
+
+:let a={0:0, 1:0, 2:0, 3:0, 4:0, 5:1, 6:1, 7:1, 8:1, 9:1}
+
+:%s#^\(-\{0,1\}\d\+\)\.\([1-9]\{1\}\d\{1\}\)\(\d\)\d*#\=(submatch(0).'==>'.submatch(1).'.'.(submatch(2) + a[submatch(3)]))#g
+
+
+
+\(*\)      : '(*)' submatch(n), we should Escaped in vim.
+submatch(0): the oirginal item
+
+%s***g     : replace
+\d         : digit
+\{n\}      : the number of previous item
+(*)        : struct, indicate that it is one item.
+
+:%s#^\(-\{0,1\}\d\+\)\.\([1-9]\{2\}\d\{1\}\)\(\d\)\d*#\=(submatch(0).'==>'.submatch(1).'.'.(submatch(2) + a[submatch(3)]))#g
+:%s#^\(-\{0,1\}\d\+\)\.0\([1-9]\{1\}\d\{1\}\)\(\d\)\d*#\=(submatch(0).'==>'.submatch(1).'.0'.(submatch(2) + a[submatch(3)]))#g
+
+:2,$s#^\(-\{0,1\}\d\+\)\.\([1-9]\{1\}\d\{1\}\)\(\d\)\d*#\=(submatch(0).'==>'.submatch(1).'.'.(submatch(2) + a[submatch(3)]))#g
+  |
+2nd line to last line
+
+.1
+let a={0:0, 1:0, 2:0, 3:0, 4:0, 5:1, 6:1, 7:1, 8:1, 9:1}
+:%s#^\0\+\(\d\+\.\)#\=(submatch(1))#g
+%s#^\(-\{0,1\}\d\+\)\.\(\d\)\(\d\)\d*#\=(submatch(1).'.'.(submatch(2) + a[submatch(3)]))#g
+%s#^\(\d\+\)\.10#\=(submatch(1)+1.'.'.0)#g
+
+0-2pi
+%s#^\(-\d\+\.\d*\)#\=(submatch(1)+3.1415926+3.1415926)#g
+
+%s#^\(-\d\+\)\.10#\=(submatch(1)-1.'.'.0)#g
+
+.3 have problem now!
+:%s#^\0\+\(\d\+\.\)#\=(submatch(1))#g
+:%s#^\(-\{0,1\}\d\+\)\.\([1-9]\{2\}\d\{1\}\)\(\d\)\d*#\=(submatch(1).'.'.(submatch(2) + a[submatch(3)]))#g
+:%s#^\(-\{0,1\}\d\+\)\.0\([1-9]\{1\}\d\{1\}\)\(\d\)\d*#\=(submatch(1).'.0'.(submatch(2) + a[submatch(3)]))#g
+:%s#^\(-\{0,1\}\d\+\)\.\([1-9][0]\{1\}\d\{1\}\)\(\d\)\d*#\=(submatch(1).'.'.(submatch(2) + a[submatch(3)]))#g
+:%s#^\(-\{0,1\}\d\+\)\.00\([1-9]\{0\}\d\{1\}\)\(\d\)\d*#\=(submatch(1).'.00'.(submatch(2) + a[submatch(3)]))#g
+gg@oxllpj@oxllpj@oxpj@oxllpj@oxllpj@ojk@oxpjjjj@oxpj@oxllpj@oxllpj@oxlhpj@oxllpj@oxllpj@oxpj@oxpjj
+@o=0f.
+:%s#^\0\+\(\d\+\.\)#\=(submatch(1))#g^M

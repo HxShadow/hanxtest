@@ -54,6 +54,7 @@ sudo ./install-tl -gui
 sudo umount /mnt/
 
 # ROOT
+# https://root.cern.ch/build-prerequisites
 sudo yum install git cmake gcc-c++ gcc binutils libX11-devel libXpm-devel libXft-devel libXext-devel -y
 sudo yum install gcc-gfortran openssl-devel pcre-devel mesa-libGL-devel mesa-libGLU-devel glew-devel ftgl-devel mysql-devel fftw-devel cfitsio-devel graphviz-devel avahi-compat-libdns_sd-devel libldap-dev python-devel libxml2-devel gsl-static -y
 sudo yum install cmake3.x86_64 -y
