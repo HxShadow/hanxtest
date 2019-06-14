@@ -169,6 +169,12 @@ sudo yum install vlc
 #sudo yum install vlc-core (for minimal headless/server install)
 #sudo yum install python-vlc npapi-vlc (optionals)
 
+# SoX
+sudo yum install sox soxr sox-plugins-freeworld -y
+#Package soxr-0.1.2-1.el7.x86_64 already installed and latest version
+#Package sox-14.4.1-6.el7.x86_64 already installed and latest version
+#Package sox-plugins-freeworld-14.4.1-3.el7.nux.x86_64 already installed and latest version
+
 #vim old
 #yum remove libstdc++.i686
 sudo yum install ncurses-devel.x86_64  -y
