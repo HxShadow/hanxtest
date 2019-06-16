@@ -148,7 +148,9 @@ sudo make install
 # nivda
 
 # vpn
+# 1. OpenConnect, a alternatives software for AnyConnect
 sudo yum install openconnect NetworkManager-openconnect -y
+# 2. AnyConnect, KEK vpn environments 
 #http://ccwww.kek.jp/ccsupport/network/vpn/index.html
 scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/anyconnect-linux64-4.5.02033-predeploy-k9.tar.gz .
 sudo yum install -y pangox-compat
@@ -156,10 +158,10 @@ tar -xf anyconnect*
 rm -v anyconnect*k9.tar.gz
 cd anyconnect*/vpn
 sudo ./vpn_install.sh
-
 /opt/cisco/anyconnect/bin/vpnui
 /opt/cisco/anyconnect/bin/vpn
-
+# 3. OpenVPN, a sample vpn which can setup on personal pc 
+sudo yum -y install NetworkManager-openvpn NetworkManager-openvpn-gnome
 
 # vlc
 #https://www.videolan.org/vlc/download-redhat.html

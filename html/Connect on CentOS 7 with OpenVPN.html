@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!-- saved from url=(0094)https://support.hidemyass.com/hc/en-us/articles/360000721867-Connect-on-CentOS-7-with-OpenVPN- -->
+<html dir="ltr" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <!-- v16156 -->
+
+  <title>Connect on CentOS 7 with OpenVPN® – Hide My Ass! Support</title>
+
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="7we4cP6K6VCH0wrV892IseWdKNDDvckmpww2dIqjnxDpJMJSrXakgCD5wnumU8xkTnjePsyEI3IuTWDL3xUVsA==">
+  <meta name="description" content="INSTALL OpenVPN® PLUGIN FOR NETWORK MANAGER  Find the Terminal option on the left side bar. Type: sudo yum -y install epel-release and..."><meta property="og:image" content="https://theme.zdassets.com/theme_assets/287093/e730e1ec9ea2811764216451ce89d0fc86c09f23.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hide My Ass! Support">
+<meta property="og:title" content="Connect on CentOS 7 with OpenVPN®">
+<meta property="og:description" content="INSTALL OpenVPN® PLUGIN FOR NETWORK MANAGER
+
+Find the Terminal option on the left side bar.
+Type: sudo yum -y install epel-release and press Enter
+Type in your root password and press Enter
+Type: s...">
+<meta property="og:url" content="http://support.hidemyass.com/hc/en-us/articles/360000721867-Connect-on-CentOS-7-with-OpenVPN-">
+<link rel="canonical" href="https://support.hidemyass.com/hc/en-us/articles/360000721867-Connect-on-CentOS-7-with-OpenVPN-">
+<link rel="alternate" hreflang="en" href="https://support.hidemyass.com/hc/en-us/articles/360000721867-Connect-on-CentOS-7-with-OpenVPN-">
+
+  <!-- Entypo pictograms by Daniel Bruce — www.entypo.com -->
+  <link rel="stylesheet" media="all" href="./Connect on CentOS 7 with OpenVPN_files/application-84c325781668caadf159e5dee8f622c3.css" id="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./Connect on CentOS 7 with OpenVPN_files/style.css">
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://theme.zdassets.com/theme_assets/287093/96a5dd20603c5ccef929fe5fb6b7225616831dab.ico">
+
+  <!--[if lt IE 9]>
+  <script>
+    //Enable HTML5 elements for <IE9
+    'abbr article aside audio bdi canvas data datalist details dialog \
+    figcaption figure footer header hgroup main mark meter nav output \
+    progress section summary template time video'.replace(/\w+/g,function(n){document.createElement(n)});
+  </script>
+<![endif]-->
+
+  <script async="" charset="utf-8" src="./Connect on CentOS 7 with OpenVPN_files/w" type="text/javascript"></script><script async="" src="./Connect on CentOS 7 with OpenVPN_files/analytics.js"></script><script async="" src="./Connect on CentOS 7 with OpenVPN_files/analytics.js"></script><script src="./Connect on CentOS 7 with OpenVPN_files/jquery-c679166c1baf738bb62b9918a7a13fd4.js"></script>
+  <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-950416-59', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+  
+  
+
+  <meta name="google-site-verification" content="ecEEshZh7n5kbmjLXOTeLgqSZBs17CptOv7LDNXCih0">
+<link href="./Connect on CentOS 7 with OpenVPN_files/css" rel="stylesheet">
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-950416-58', 'auto');
+  ga('set', 'anonymizeIp', true); 
+  ga('send', 'pageview');
+
+</script>
+
+
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/helpcenter.js"></script>
+<script>var cfaRules = [{"fieldType":"tagger","field":32751168,"value":"corporate_vpn_package","select":[24041033],"formId":183367,"requireds":[]},{"fieldType":"tagger","field":32751168,"value":"corporate_vpn_package","select":[24041033],"formId":669988,"requireds":[24041033]},{"fieldType":"tagger","field":32751168,"value":"purchase_multiple_accounts","select":[24041033],"formId":183367,"requireds":[]},{"fieldType":"tagger","field":32751168,"value":"purchase_multiple_accounts","select":[24041033],"formId":669988,"requireds":[24041033]},{"fieldType":"tagger","field":32751168,"value":"purchase_multiple_sessions","select":[35402527],"formId":183367,"requireds":[]},{"fieldType":"tagger","field":32751168,"value":"purchase_multiple_sessions","select":[35402527],"formId":669988,"requireds":[35402527]},{"fieldType":"tagger","field":33519748,"value":"web_connection_tier1","select":[33520088],"formId":669988,"requireds":[33520088]},{"fieldType":"tagger","field":33519748,"value":"web_installation_setup_issues","select":[33520088],"formId":669988,"requireds":[33520088]},{"fieldType":"tagger","field":33519768,"value":"cancel_tier1_web","select":[23769768],"formId":305828,"requireds":[]},{"fieldType":"tagger","field":33519768,"value":"refund_tier1_web","select":[23769768],"formId":305828,"requireds":[]},{"fieldType":"tagger","field":33519768,"value":"refund_tier1_web","select":[23769768],"formId":669988,"requireds":[23769768]},{"fieldType":"tagger","field":33520088,"value":"web_installation_issues_device","select":[33521808],"formId":219207,"requireds":[]},{"fieldType":"tagger","field":33520088,"value":"web_installation_issues_device","select":[33521808],"formId":669988,"requireds":[33521808]},{"fieldType":"tagger","field":33520088,"value":"web_installation_issues_os","select":[33521768],"formId":219207,"requireds":[]},{"fieldType":"tagger","field":33520088,"value":"web_installation_issues_os","select":[33521768],"formId":669988,"requireds":[33521768]},{"fieldType":"tagger","field":44324788,"value":"other_refund_reason","select":[26596638],"formId":92458,"requireds":[]},{"fieldType":"tagger","field":45923647,"value":"refund_request_via_avg","select":[23608788,23769768],"formId":434067,"requireds":[23608788,23769768]},{"fieldType":"tagger","field":45923647,"value":"refund_request_via_avg","select":[23769768,23608788],"formId":451488,"requireds":[23608788,23769768]},{"fieldType":"tagger","field":45923647,"value":"troubleshooting_request_via_avg","select":[45832748],"formId":434067,"requireds":[45832748]},{"fieldType":"tagger","field":45923647,"value":"troubleshooting_request_via_avg","select":[45832748,23608788],"formId":451488,"requireds":[23608788,45832748]},{"fieldType":"tagger","field":77434407,"value":"i_m_having_installation_setup_issues","select":[33519748],"formId":669988,"requireds":[33519748]},{"fieldType":"tagger","field":77434407,"value":"i_would_like_to_buy_a_vpn_account","select":[32751168],"formId":669988,"requireds":[32751168]},{"fieldType":"tagger","field":77434407,"value":"manage_my_account_subscription","select":[33519768],"formId":669988,"requireds":[33519768]}];</script>
+
+
+<script src="./Connect on CentOS 7 with OpenVPN_files/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="./Connect on CentOS 7 with OpenVPN_files/jquery-ui-mod.css">
+<link rel="stylesheet" href="./Connect on CentOS 7 with OpenVPN_files/animations.css">
+<script src="./Connect on CentOS 7 with OpenVPN_files/jquery.collapsible.min.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/jquery.cookie.min.js"></script>
+ <script src="./Connect on CentOS 7 with OpenVPN_files/jquery.balancetext.min.js"></script>
+<script src="./Connect on CentOS 7 with OpenVPN_files/satelliteLib-12e3e30b0cbf6edab9a3770bb5af1c5d3894412e.js"></script><script src="./Connect on CentOS 7 with OpenVPN_files/mbox-contents-ea3e533458cc3e67f90d70ba6462509e01c94fb2.js"></script><style>.mboxDefault { visibility:hidden; }</style><script src="https://cdn.tt.omtrdc.net/cdn/target.js"></script>
+
+<!-- Hotjar Tracking Code for https://support.hidemyass.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:249033,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script><script async="" src="./Connect on CentOS 7 with OpenVPN_files/hotjar-249033.js"></script>
+
+<!-- Start of hidemyass Zendesk Widget script -->
+<script id="ze-snippet" src="./Connect on CentOS 7 with OpenVPN_files/snippet.js"> </script><script type="text/javascript" src="./Connect on CentOS 7 with OpenVPN_files/asset_composer.0b90cb2ef9d822c1e1aa.js" charset="utf-8" async=""></script>
+<!-- End of hidemyass Zendesk Widget script -->
+
+
+  
+  <script type="text/javascript" src="./Connect on CentOS 7 with OpenVPN_files/script.js"></script>
+<script async="" src="./Connect on CentOS 7 with OpenVPN_files/modules.8f5a11ec90e5e3e8eea1.js"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><script src="./Connect on CentOS 7 with OpenVPN_files/answerBot.js"></script><script type="text/javascript" charset="utf-8" async="" src="./Connect on CentOS 7 with OpenVPN_files/SubscriptionControls-f37bdc8c6d9e8814953b363b6d13acd4.js"></script><script src="./Connect on CentOS 7 with OpenVPN_files/s-code-contents-8a64621452fee678ed7f5341cfafd575f4ba7c13.js"></script><style media="print" class="jx_ui_StyleSheet" __jx__id="___$_2" type="text/css">.zopim { display: none !important }</style></head>
+        <h2>INSTALL OpenVPN® PLUGIN FOR NETWORK MANAGER</h2>
+<ul>
+<li>Find the Terminal option on the left side bar.</li>
+<li>Type: sudo yum -y install epel-release and press Enter</li>
+<li>Type in your root password and press Enter</li>
+<li>Type: sudo yum -y install NetworkManager-openvpn NetworkManager-openvpn-gnome and press Enter</li>
+</ul>
+<p>&nbsp;</p>
+<h2>CONFIGURE VPN</h2>
+<p>Now that you have installed OpenVPN® plugin for Network Manager, you will need to download the vpn.config.zip files here:</p>
+<p><a href="https://www.hidemyass.com/vpn-configs/vpn-configs.zip">https://www.hidemyass.com/vpn-configs/vpn-configs.zip</a></p>
+<p>Go to "<strong>Home</strong>" and create a new folder e.g. "<strong>HMA VPN</strong>". The files you have downloaded previously are in your "Downloads" folder. You will need to extract both zip files into your new folder.</p>
+<p>Then go to your Network Manager in the upper right corner of your desktop. Click on "<strong>Wired</strong>" and then to "<strong>Wired Settings</strong>" and new window will appear. Then click on "<strong>+</strong>" and then select "<strong>VPN</strong>" and then "I<strong>mport from file</strong>", as shown below:</p>
+<p>&nbsp;</p>
+<p><img src="./Connect on CentOS 7 with OpenVPN_files/CenOS01.png" width="816" height="327"></p>
+<p><img src="./Connect on CentOS 7 with OpenVPN_files/CenOS02.png">&nbsp;</p>
+<p><img src="./Connect on CentOS 7 with OpenVPN_files/CenOS03.png">&nbsp;</p>
+<p>&nbsp;</p>
+<p>New window will appear, here you need to go to that HMA VPN folder and to select the OpenVPN® configuration file for the location you wish to connect to and then click on "<strong>Open</strong>".</p>
+<p>&nbsp;</p>
+<p><img src="./Connect on CentOS 7 with OpenVPN_files/CenOS04.png"></p>
+<p>&nbsp;</p>
+<p>In this window, enter your HMA! Username and Password into the appropriate fields in the "<strong>Identity</strong>" tab and make sure that "<strong>Make available to other users</strong>" is <span class="wysiwyg-underline">checked</span> and lastly press "<strong>Add</strong>"</p>
+<p>&nbsp;</p>
+<p><img src="./Connect on CentOS 7 with OpenVPN_files/CenOS05.png"></p>
+<p>&nbsp;</p>
+<h2>CONNECT TO VPN</h2>
+<p>After this, navigate to your Network Manager&nbsp; (located in the top right corner of your desktop). Click on "<strong>VPN</strong>" and then click on the "<strong>Connect</strong>" button.</p>
+<p>&nbsp;</p>
+<p><img src="./Connect on CentOS 7 with OpenVPN_files/CenOS06.png"></p>
+<p>&nbsp;</p>
+<p>&nbsp;You will see a notification that you have established a successful VPN connection!</p>
+<p>&nbsp;</p>
+<p>You can check your new location here: <a href="http://geoip.hidemyass.com/">http://geoip.hidemyass.com/</a></p>
+<p>&nbsp;</p>
+<p><img src="./Connect on CentOS 7 with OpenVPN_files/CenOS07.png"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Should you have any connection issues, please type the following into your terminal:</p>
+<p>&nbsp;</p>
+<p><strong>&nbsp;journalctl -u NetworkManager | grep vpn &gt; openvpn_log.txt</strong></p>
+<p>&nbsp;</p>
+<p>This will create openvpn.txt file in the folder you are currently located,&nbsp; so please send us that log file.</p>
+      </div>
+    
+
+    
+  
+          
+           <div class="article-vote-controls">
+              <a role="button" rel="nofollow" class="article-vote-up" title="Yes" aria-selected="false" data-auth-action="signin" href="https://support.hidemyass.com/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.hidemyass.com%2Fhc%2Fen-us%2Farticles%2F360000721867-Connect-on-CentOS-7-with-OpenVPN-"></a>
+              <a role="button" rel="nofollow" class="article-vote-down" title="No" aria-selected="false" data-auth-action="signin" href="https://support.hidemyass.com/hc/en-us/signin?return_to=https%3A%2F%2Fsupport.hidemyass.com%2Fhc%2Fen-us%2Farticles%2F360000721867-Connect-on-CentOS-7-with-OpenVPN-"></a>
+           
+          </div>
+      
+      <div class="article-vote-advice">Have more questions? Ask them on our <a href="https://support.hidemyass.com/hc/en-us/community/topics">community</a>!</div>
+        
+    </div>
+  </article>
+  </div>
+ 
+</div>
+  </main>
+
+
+
+  <!-- / -->
+
+  <script type="text/javascript" src="./Connect on CentOS 7 with OpenVPN_files/en-us-a5503df53549041d0c344c39572f0906.js"></script>
+  <script src="./Connect on CentOS 7 with OpenVPN_files/host.js" data-brand-id="3003886" data-return-to="https://support.hidemyass.com/hc/en-us/articles/360000721867-Connect-on-CentOS-7-with-OpenVPN-" data-theme="hc" data-locale="en-us" data-auth-origin="3003886,true,true"></script>
+  <script type="text/javascript" src="./Connect on CentOS 7 with OpenVPN_files/zendesk_pci_hc.v4.js"></script>
+
+  <script type="text/javascript">
+  /*
+
+    Greetings sourcecode lurker!
+
+    This is for internal Zendesk and legacy usage,
+    we don't support or guarantee any of these values
+    so please don't build stuff on top of them.
+
+  */
+
+  HelpCenter = {};
+  HelpCenter.account = {"subdomain":"hidemyass","environment":"production","name":"Hide My Ass! Support"};
+  HelpCenter.user = {"identifier":"da39a3ee5e6b4b0d3255bfef95601890afd80709","email":null,"name":null,"role":"anonymous","avatar_url":"https://assets.zendesk.com/hc/assets/default_avatar.png","is_admin":false,"organizations":[],"groups":[]};
+  HelpCenter.internal = {"asset_url":"//static.zdassets.com/hc/assets/","web_widget_asset_composer_url":"https://static.zdassets.com/ekr/snippet.js","current_session":{"locale":"en-us","csrf_token":"Fst0dk48o908QYviaHFlZbVzXGt/dZKlwk4FDv40KgQQ6A5UHcDuDZtrQ0w9/yGwHpaqhXBMePFLD1Oxq4KgpA==","shared_csrf_token":null},"settings":{"zopim_enabled":true,"spam_filter_enabled":false},"current_record_id":"360000721867","current_record_url":"/hc/en-us/articles/360000721867-Connect-on-CentOS-7-with-OpenVPN-","current_record_title":"Connect on CentOS 7 with OpenVPN®","search_results_count":null,"current_text_direction":"ltr","current_brand_url":"https://hidemyass.zendesk.com","current_host_mapping":"support.hidemyass.com","current_path":"/hc/en-us/articles/360000721867-Connect-on-CentOS-7-with-OpenVPN-","authentication_domain":"https://hidemyass.zendesk.com","show_autocomplete_breadcrumbs":true,"rollbar_config":{"enabled":true,"endpoint":"https://rollbar-us.zendesk.com/api/1/item/","accessToken":"731a5a953e9a4b7ab6cac9623f50c732","captureUncaught":true,"captureUnhandledRejections":true,"payload":{"environment":"production","client":{"javascript":{"source_map_enabled":true,"code_version":"336a702941efc2aa938829fd1d78d523abf0da63","guess_uncaught_frames":true}}}},"user_info_changing_enabled":false,"has_user_profiles_enabled":false,"user_aliases_enabled":false,"has_anonymous_kb_voting":false,"has_professional_upsell":false,"has_multi_language_help_center":true,"mobile_device":false,"mobile_site_enabled":true,"show_at_mentions":false,"has_copied_content":true,"embeddables_config":{"embeddables_web_widget":false,"embeddables_connect_ipms":false},"base_domain":"zendesk.com","answer_bot_subdomain":"static","plans_url":"https://support.hidemyass.com/hc/admin/plan?locale=en-us","manage_content_url":"https://support.hidemyass.com/hc/en-us","arrange_content_url":"https://support.hidemyass.com/hc/admin/arrange_contents?locale=en-us","general_settings_url":"https://support.hidemyass.com/hc/admin/general_settings?locale=en-us","user_segments_url":"https://hidemyass.zendesk.com/knowledge/user_segments?brand_id=3003886","has_community_enabled":true,"has_internal_sections":true,"has_answer_bot_web_form_enabled":false,"billing_url":"/access/return_to?return_to=https://hidemyass.zendesk.com/agent/admin/subscription","has_answer_bot":true,"has_block_answer_bot_embeddable":false,"answer_bot_management_url":"https://support.hidemyass.com/hc/admin/answer_bot?locale=en-us","is_account_owner":false,"theming_center_url":"https://support.hidemyass.com/theming","theming_cookie_key":"hc-da39a3ee5e6b4b0d3255bfef95601890afd80709-preview","is_preview":false,"has_guide_user_segments_search":true,"has_alternate_templates":false,"arrange_articles_url":"https://hidemyass.zendesk.com/knowledge/arrange?brand_id=3003886","article_verification_url":"https://hidemyass.zendesk.com/knowledge/verification?brand_id=3003886","has_article_verification":false,"guide_language_settings_url":"https://support.hidemyass.com/hc/admin/language_settings?locale=en-us","has_fetch_authenticity_token":true,"docs_importer_url":"https://hidemyass.zendesk.com/knowledge/import_articles?brand_id=3003886"};
+</script>
+
+  <script src="./Connect on CentOS 7 with OpenVPN_files/hc_enduser-003238cbbff0851ffcc20155d1690acf.js"></script><div id="ads"></div>
+
+  <script type="text/javascript">
+    (function() {
+  var Tracker = {};
+
+  Tracker.track = function(eventName, data) {
+    var url = "https://support.hidemyass.com/hc/tracking/events?locale=en-us";
+
+    var payload = {
+      "event": eventName,
+      "data": data,
+      "referrer": document.referrer
+    };
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    xhr.send(JSON.stringify(payload));
+  };
+
+    Tracker.track("article_viewed", "BAh7CDoLbG9jYWxlSSIKZW4tdXMGOgZFVDoPYXJ0aWNsZV9pZGwrCMsTt9FTADoKX21ldGF7CzoPYWNjb3VudF9pZGkDdWEEOhNoZWxwX2NlbnRlcl9pZGkEgkLsCzoNYnJhbmRfaWRpA+7VLToMdXNlcl9pZDA6DnVzZXJfcm9sZUkiDmFub255bW91cwY7BlQ7AEkiCmVuLXVzBjsGVA==--573c85cc48e0d699fcdc30cedb926dfdf20cf11f");
+})();
+
+  </script>
+
+<iframe name="_hjRemoteVarsFrame" title="_hjRemoteVarsFrame" id="_hjRemoteVarsFrame" src="./Connect on CentOS 7 with OpenVPN_files/box-90f3a29ef7448451db5af955688970d7.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe><div><iframe data-reactroot="" id="automaticAnswers" class="zEWidget-automaticAnswers" tabindex="-1" style="border: none; background: transparent; transform: translateZ(0px); position: fixed; opacity: 0; bottom: 0px; margin: 0px 6px 6px 0px; z-index: 2147483647; right: 0px; height: 188px; width: 410px; transition-property: none; transition-timing-function: unset; top: -9999px;" src="./Connect on CentOS 7 with OpenVPN_files/saved_resource(2).html"></iframe></div><iframe data-product="web_widget" title="No content" tabindex="-1" aria-hidden="true" src="./Connect on CentOS 7 with OpenVPN_files/saved_resource(3).html" style="width: 0px; height: 0px; border: 0px; position: absolute; top: -9999px;"></iframe><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span><script>
+    (function(d,s){var z=$zopim,$=z.s= d.createElement(s),e=d.getElementsByTagName(s)[0];
+    $.async=!0;$.setAttribute('charset','utf-8');
+    $.src='https://v2.zopim.com/w?2MiOkoE6qQKHJb2yXchEl7L7Qqa5lwlK';
+    z.t=+new Date;$. type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+  </script><div><iframe title="打开一个小组件，您可以在其中找到更多信息" id="launcher" tabindex="0" class="zEWidget-launcher zEWidget-launcher--active" style="border: none; background: transparent; z-index: 999998; transform: translateZ(0px); position: fixed; transition: opacity 250ms cubic-bezier(0.645, 0.045, 0.355, 1) 0s, top, bottom; opacity: 1; width: 108px; height: 50px; max-height: 551px; min-height: 50px; margin: 10px 20px; right: 0px; bottom: 0px;" src="./Connect on CentOS 7 with OpenVPN_files/saved_resource(4).html"></iframe></div><div><iframe title="在这里找到更多信息" id="webWidget" tabindex="-1" class="zEWidget-webWidget " style="border: none; background: transparent; z-index: 999999; transform: translateZ(0px); position: fixed; transition: opacity 250ms cubic-bezier(0.645, 0.045, 0.355, 1) 0s, top, bottom; opacity: 0; width: 357px; height: 100%; max-height: 165px; min-height: 150px; margin-left: 8px; margin-right: 8px; top: -9999px;" src="./Connect on CentOS 7 with OpenVPN_files/saved_resource(5).html"></iframe></div><style></style></body></html>
