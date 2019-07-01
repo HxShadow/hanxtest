@@ -9,3 +9,4 @@ do
 	echo "<li> <a href=\"../files/$file\">$file</a></li><br/>" >> html/files.html
 done
 echo "<br/> <hr/> </head> </html> <!-- -->" >> html/files.html
+cp files/Scientific.Linux.sh files/Scientific.Linux.txt -f
