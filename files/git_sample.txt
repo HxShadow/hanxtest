@@ -25,3 +25,5 @@ git branch -D                        # delete branch farce
 git push origin --delete branch_name # delete branch from remote
 
 git diff <source_branch> <target_branch>
+
+git add -i                           # 交互地添加文件至缓存区?
