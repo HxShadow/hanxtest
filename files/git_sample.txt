@@ -1,0 +1,27 @@
+git config --local user.name 'shadow'
+git config --local user.email 'you@example.com'
+
+git init
+git status
+git add .
+git add -A
+git commit -m "comment"
+
+# go back
+git log
+git reset --hard 6c439d2fd0d943f36f3ee84e158ff86b052961d2
+# go forward
+git reflog
+git reset --hard 0972f4b
+
+git branch branch_name               # 创建分支
+git checkout branch_name             # 切换分支
+git branch -m branch_name            # 创建并切换到指定分支
+git branch -m old_name new_name      # rename
+git branch                           # 查看所有分支
+git branch -d branch_name            # 删除分支
+git merge branch_name                # 将指定分支合并到当前分支
+git branch -D                        # delete branch farce
+git push origin --delete branch_name # delete branch from remote
+
+git diff <source_branch> <target_branch>
