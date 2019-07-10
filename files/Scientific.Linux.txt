@@ -245,3 +245,6 @@ cd #blabla
 
 # psacct
 #https://www.wenzizone.cn/2009/12/04/使用psacct监控linux用户行为技术.html
+
+# Edit main menu in gnome
+sudo yum install menulibre
