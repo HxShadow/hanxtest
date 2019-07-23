@@ -1,3 +1,0 @@
-sudo apt-get install network-manager-openconnect network-manager-openconnect-gnome
-# To get the AnyConnect VPN
-# then connect to kekvpn.kek.jp with username: hanx/vpn on 'vpn connections'
