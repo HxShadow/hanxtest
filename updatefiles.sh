@@ -10,3 +10,4 @@ do
 done
 echo "<br/> <hr/> </head> </html> <!-- -->" >> html/files.html
 cp files/Scientific.Linux.sh files/Scientific.Linux.txt -f
+cp files/download.sh files/download.txt -f

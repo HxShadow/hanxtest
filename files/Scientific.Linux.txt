@@ -1,3 +1,4 @@
+ssh-copy-id -i id_rsa.pub ttd15
 sudo rm -f /var/run/yum.pid
 #vim
 sudo yum install vim-* -y
@@ -47,8 +48,8 @@ init 6
 # LaTeX
 sudo yum install perl-Digest-MD5 -y
 sudo yum remove texlive-* -y
-cd;scp -P 2000 hanx@hep.buaa.edu.cn:share/install/software/LaTeX/texlive2018.iso .
-sudo mount texlive2018.iso /mnt;cd /mnt
+cd;scp lxslc6.ihep.ac.cn:besfs/share/Software/texlive2019-20190410.iso .
+sudo mount texlive2019-20190410.iso /mnt;cd /mnt
 sudo yum install perl-Tk -y
 sudo ./install-tl -gui
 sudo umount /mnt/
