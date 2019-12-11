@@ -1,0 +1,22 @@
+首先在 Linux 系统中打开终端，确认 U 盘路径：
+
+sudo fdisk -l
+
+格式化 U 盘，为了格式化首先需要 umount U 盘：
+/dev/sdb 是我的 U 盘设备。
+
+sudo umount /dev/sdb*
+
+格式化 U 盘：
+
+sudo mkfs.vfat /dev/sdb -I
+
+使用 dd 命令，格式如下：
+
+sudo dd if=xxx.iso of=U盘路径
+
+完整示例：
+
+sudo dd if=~/images/ubuntu.iso of=/dev/sdb
+
+向 sdb 磁盘写入位于～/images目录下的 ubuntu.iso 镜像文件 输完上述DD命令后回车执行，系统就开始制作启动盘了，期间终端命令窗口不会有任何反馈，但能通过U盘运行指示灯看到U盘在进行读写操作，这个过程可能持续5、6分钟才完成。当看到终端命令窗口有返回消息即制作完成。
